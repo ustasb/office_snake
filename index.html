@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Office Snake | Competitive JavaScript Snake</title>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<meta name="description" content="Office Snake is a competitive JavaScript Snake game." />
+		<meta name="keywords" content="snake, snake game, free snake, office snake, javascript snake, snake source" />
+		<link rel="shortcut icon" href="images/favicon.ico" />
+		<link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato" />
+		<link type="text/css" rel="stylesheet" href="css/custom-theme/jquery-ui-1.8.16.custom.css" />
+		<link type="text/css" rel="stylesheet" href="css/oSnake.css" />
+	</head>
+	<body>
+ 		<div id="source">
+			<a href="#"><!-- current version --></a>
+		</div>
+		<div id="clientWarning">Enable JavaScript to view this site.</div>
+		<div id="gameContainer">
+			<div id="pointAddition"></div>
+			<div id="canvas">
+				<div id="slidingMenu">
+					<div id="highscores">
+						<div id="highscoresView">
+							<span id="classicView">Classic</span>
+							<span> | </span>
+							<span id="challengeView">Challenge</span>
+						</div>
+						<div class="back">back</div>
+						<table>
+							<tr>
+								<th><!-- rank --></th>
+								<th>Name</th>
+								<th>Score</th>
+								<th>Time</th>
+								<th>Date</th>
+							</tr>
+						</table>
+					</div>
+					<div id="home">
+						<div class="centerBox">
+							<h1>Office Snake</h1>
+							<div id="mainMenu">
+								<span>Classic</span><br />
+								<span>Challenge</span><br />
+								<span>Custom</span><br /><br />
+								<span>Highscores</span>
+							</div><br />
+						</div>
+					</div>
+					<div id="help">
+						<div id="selectedDifficulty"></div>
+						<div class="back">back</div>
+						<div class="centerBox">
+							<div id="instructions">
+								<ul>
+									<li>Eat humans but don't eat yourself.</li>
+									<li>The more you eat, the more you'll grow.</li>
+									<li class="challengeInfo">Each wall describes the number of bombs immediately surrounding it.</li>
+									<li class="challengeInfo">Isolating a wall with a bomb reveals a hidden human.</li>
+									<li class="challengeInfo">Detonating a bomb reduces your score and snake's length.</li>
+									<li class="challengeInfo">Eat the hidden humans in walls without bombs to advance.</li>
+								</ul>
+								<p class="clear"></p>
+							</div>
+							<div id="custom">
+								<div>
+									<span id="speed">Speed: <span></span></span>
+									<div class="slider"></div>
+								</div><br />
+								<div>
+									<span id="powerUpDuration">Power-Up Duration: <span></span>s</span>
+									<div class="slider"></div>
+								</div><br />
+								<div>
+									<span id="startingLength">Starting Length: <span></span></span>
+									<div class="slider"></div>
+								</div><br />
+								<div>
+									<span id="humansPresent">Humans Present: <span></span></span>
+									<div class="slider"></div>
+								</div><br />
+								<div>
+									<span id="walls">Walls: <span></span></span>
+									<div class="slider"></div>
+								</div><br />
+								<div>
+									<span id="bombs">Bombs: <span></span>%</span>
+									<div class="slider"></div>
+								</div><br />
+							</div>
+							<div id="pickUpCtrlInfo">
+ 								<div>Move<span>&uarr;&rarr;&darr;&larr;</span></div>
+								<div>Pause<span>p</span></div>
+								<span>-Items-</span>
+								<div>Human<div class="pickUp smile"></div></div>
+								<div>Double Points<div class="pickUp dblPoints"></div></div>
+								<div>Shrink Length<div class="pickUp shrink"></div></div>
+								<div>Slow Time<div class="pickUp slowTime"></div></div>
+								<div>Invincibility<div class="pickUp invincible"></div></div>
+								<div class="challengeInfo">Next Level<div class="pickUp portal"></div></div>
+							</div>
+							<div id="ready"><span>Ready!</span></div>
+						</div>
+					</div>
+					<div id="maps">
+						<div id="mapsIE7Fix">
+							<div id="gameViewUtils">
+								<div id="snakeHUD">
+									<div class="challengeInfo"></div>
+									<span id="clock">0</span>
+									<div id="scoreBar">
+										<span class="score">0pts</span>
+									</div>
+								</div>
+								<div id="powerUpPlaceHolder"></div>
+								<div id="pauseMenu">
+									<span id="resume">Resume</span><br />
+									<span class="goToMenu">Main Menu</span>
+								</div>
+								<div id="gameOver">
+									<div id="ranking">
+										<div id="congrats">Congrats! You've won. Crazy, bro.</div>
+										<span id="score">Score: </span><br />
+										<span id="rank">Rank: </span>
+									</div>
+									<div id="enterName">
+										<label for="playerName">Submit a name to the highscores to view ranking.</label><br />
+										<input id="playerName" type="text" name="name" value=""/><br />
+										<span id="submit">Submit</span>
+									</div>
+									<span id="retry">Play Again</span><br />
+									<span class="goToMenu">Main Menu</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="credit">Made by Brian Ustas</div>
+   		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/oSnake.js"></script>
+	</body>
+</html>

@@ -1,0 +1,114 @@
+/*
+ * Office Snake -- A JavaScript/jQuery Snake + Minesweeper Game
+ *
+ * oSnake.css
+ * 2011-09-12
+ *
+ * Copyright (C) 2011 Brian Ustas | bjjustas@gmail.com
+ * MIT license: http://www.opensource.org/licenses/mit-license.php
+ */
+ 
+* {margin:0; padding:0; font-family:'Lato', Arial, sans-serif; color:#afafaf; line-height:20px;}
+
+html {position:relative; height:100%; background-color:#111111; background-image:url(../images/tiles.png);}
+a:hover {text-decoration:none;}
+ul {list-style-type:square;}
+input {border:2px solid black; background-color:#afafaf; color:#111111; font-size:1em; padding-left:2px; margin-top:2px;}
+h1 {font-size:2.9em; font-weight:normal;}
+
+#clientWarning {margin-top:25%; font-size:1.5em; line-height:1.5em; text-align:center;}
+#source, #credit {position:absolute; right:0; padding:5px 10px; display:none;}
+#source {top:0; font-size:0.8em; width: 70px; text-align:right; overflow:hidden;}
+#source iframe {float:right; margin-top:5px; border:none; width:73px; height:21px;}
+#credit {bottom:0; font-size:0.6em;}
+#pointAddition {position:absolute; right:-90px; top:0; font-size:1.5em;}
+
+/* The '!important' tags are used to override jQuery UI's CSS without customizing the source. */
+#gameContainer {position:relative; margin:auto; background-color:#111111; border:2px solid #afafaf; display:none; overflow:visible !important; opacity:1 !important; filter:alpha(opacity=100) !important;}
+#canvas {position:relative; overflow:hidden; height:100%;}
+#loading {position:absolute; bottom:2px; left:4px;}
+#slidingMenu {position:absolute; width:10000px; top:0;}
+
+.ui-icon-gripsmall-diagonal-se {background-position:-80px -224px; width:15px; height:15px;}
+
+#highscores, #home, #help {float:left; height:100%;}
+.centerBox {padding-bottom:5px;}
+.back {margin:1px 5px;}
+#highscores .back {float:right;}
+#help .back {float:left;}
+
+#highscoresView {float:left;}
+#highscoresView span {margin:1px 5px;}
+table {width:425px; display:block; margin:auto; margin-top:40px; border-collapse:collapse;}
+table td, table th {width:75px; height:20px; text-align:left;}
+table td:first-child, table th:first-child {width:50px;}
+table td:first-child + td, table th:first-child + th {width:150px;}
+
+#home h1 {height:40px; text-align:center; line-height:43px;}
+#mainMenu {margin-top:20px; height:80px; text-align:center;}
+
+#help #instructions {margin:auto; width:300px; margin-top: 40px;}
+#instructions ul {margin-left:15px;}
+#selectedDifficulty {float:right; margin:1px 5px;}
+#pickUpCtrlInfo {width:200px; margin: 20px auto; text-align:center;}
+#pickUpCtrlInfo > div {position:relative; height:20px; text-align:left;}
+#pickUpCtrlInfo > div div, #pickUpCtrlInfo > div span {position:absolute; top:0; right:0;}
+
+#custom div {margin:auto; text-align:center;}
+#custom > div {height:40px;}
+#custom > div div {margin-top:7px;}
+#custom .ui-slider {width:200px; cursor:pointer;}
+#custom .ui-slider a {cursor:pointer;}
+
+#ready {text-align:center;}
+
+#maps {width:4000px;} /* #maps needs a width to display properly in Opera. */
+#maps, #maps .levelContainer {float:left; height:100%;}
+#mapsIE7Fix, #maps .level {width:100%; height:100%; position:relative;}
+
+#gameViewUtils {position:absolute; left:0; height:100%; z-index:5;}
+#snakeHUD {position:absolute; height:20px; border-bottom:1px dotted #afafaf; width:100%; text-align:center; z-index:3;}
+#snakeHUD .challengeInfo {position:absolute; top:0; left:5px;}
+#snakeHUD #scoreBar {position:absolute; top:0; right:5px;}
+
+#powerUpPlaceHolder {position:absolute; bottom:22px; height:20px; width:100%; z-index:10;}
+#powerUpTimeBar {margin:auto; margin-top:5px; width:30%; height:10px; background-color:#afafaf; border:2px solid #111111;}
+
+#pauseMenu, #gameOver, #countdown {position:absolute; width:100%; z-index:5; text-align:center; background-color:#afafaf; border:2px solid #111111; border-left:none;}
+#pauseMenu span, #gameOver span, #gameOver label {color:#111111;}
+#pauseMenu {padding-bottom:3px;}
+#gameOver {padding-bottom:10px;}
+#ranking span, #congrats {font-size:2em; height:40px; line-height:40px;}
+#congrats {color:#800000; margin-bottom:20px; display:none;}
+#enterName {height:80px; margin-top:20px;}
+#enterName input {width:150px; height:20px;}
+#enterName #error {color:#800000;}
+
+/* Buttons (Not very efficient, but it's organized.) */
+.back, #mainMenu span, #ready span, #pauseMenu span, #submit, #gameOver > span, #classicView, #challengeView {cursor:pointer; text-decoration:underline;}
+.back:hover, #mainMenu span:hover, #ready span:hover, #pauseMenu span:hover, #submit:hover, #gameOver > span:hover, #classicView:hover, #challengeView:hover {text-decoration:none;}
+
+#countdown {font-size:2em; height:90px;}
+#countdown #currentLevel {margin-top:5px;}
+#countdown div {height:40px; line-height:40px; color:#111111;}
+
+p.clear {clear:both;}
+
+/* Game Items */
+.snakeSeg, .wall, .head, .pickUp, .explosion {position:absolute; margin:1px 0 0 1px; z-index:1;}
+.head {width:8px; height:8px; background-color:#800000; border:5px solid #afafaf; z-index:3;}
+.snakeSeg {background-color:#afafaf; z-index:2; width:18px; height:18px;}
+.deadSnakeSeg {background-color:#800000 !important;}
+.wall {border:2px solid #afafaf; width:14px; height:14px; line-height:14px; text-align:center; color:#afafaf !important; font-family:Arial, sans-serif; font-size:0.9em;}
+
+.pickUp, .explosion {background-image: url(../images/items.png);}
+.pickUp {width:18px; height:18px; border:none;}
+.explosion {width:60px; height:60px; background-position:0 -20px; margin:0; z-index:0;}
+
+.smile {background-position:-18px 0;}
+.frown {background-position:-36px 0 !important;}
+.dblPoints {background-position:-90px 0;}
+.shrink {background-position:-72px 0;}
+.slowTime {background-position:-54px 0;}
+.invincible	{background-position:-108px 0;}
+.portal {background-position:-1px -1px;}
