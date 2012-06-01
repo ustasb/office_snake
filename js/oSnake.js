@@ -1,13 +1,3 @@
-/*
- * Office Snake -- A JavaScript/jQuery Snake + Minesweeper Game
- *
- * oSnake.js
- * 2011-09-12
- *
- * Copyright (C) 2011 Brian Ustas | bjjustas@gmail.com
- * MIT license: http://www.opensource.org/licenses/mit-license.php
- */
-
 (function ($, undefined) {
 	"use strict";
 	var SnakeCache, SnakeView, SnakeHelpers, SnakeEngine, Snake;
@@ -710,6 +700,14 @@
 						rank += 1;
 					}
 				};
+
+                $.ajax({
+                  type: "POST",
+                  url: "../cgi-bin/hsGetter.py",
+                  data: {amt: scoresToLoad, diff: difficulty}
+                }).done(function(csvResponse) {
+                    handleSuccess(csvResponse);
+                });
 			}
 		},
 		alignMenuTabs: function (width) { // Sets the 'left' positions of the sliding menu tabs.
@@ -1421,10 +1419,20 @@
 			$("#enterName").append("<span>Saving...</span>");
 
 			handleSuccess = function(rank) {
+                print(rank)
 				$("#rank").text("Rank: " + rank);
 				$("#enterName span:last-child").text("Saved.");
 				$("#enterName input").attr("disabled", "disabled");
 			};
+
+            $.ajax({
+              type: "POST",
+              url: "../cgi-bin/hsSetter.py",
+              data: {name: name, diff: SnakeCache.session.difficulty, time: SnakeEngine.time, score: SnakeCache.session.score}
+            }).done(function(rank) {
+                handleSuccess(rank);
+            });
+
 		} else {
 			var $error, errorMsg;
 
