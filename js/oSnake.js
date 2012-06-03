@@ -701,13 +701,9 @@
 					}
 				};
 
-                $.ajax({
-                  type: "POST",
-                  url: "../cgi-bin/hsGetter.py",
-                  data: {amt: scoresToLoad, diff: difficulty}
-                }).done(function(csvResponse) {
-                    handleSuccess(csvResponse);
-                });
+                if (HighScores) {
+                    HighScores.get(scoresToLoad, difficulty, handleSuccess)
+                }
 			}
 		},
 		alignMenuTabs: function (width) { // Sets the 'left' positions of the sliding menu tabs.
@@ -1425,13 +1421,9 @@
 				$("#enterName input").attr("disabled", "disabled");
 			};
 
-            $.ajax({
-              type: "POST",
-              url: "../cgi-bin/hsSetter.py",
-              data: {name: name, diff: SnakeCache.session.difficulty, time: SnakeEngine.time, score: SnakeCache.session.score}
-            }).done(function(rank) {
-                handleSuccess(rank);
-            });
+            if (HighScores) {
+                HighScores.put(name, SnakeCache.session.difficulty, SnakeEngine.time, SnakeCache.session.score, handleSuccess)
+            }
 
 		} else {
 			var $error, errorMsg;
