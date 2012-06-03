@@ -610,7 +610,7 @@
 		gameContWidth: 0,
 		gameContHeight: 0,
 		hsRequestTime: 0,
-		highscoresView: "classic",
+		highScoresView: "classic",
 		slidingMenuTab: "homePos",
 		slidingMenu: {
 			highScoresPos: "",
@@ -695,7 +695,7 @@
 						// This concatenation needs work...
 						$csvRow = $("<tr class='highscore'><td>" + rank + "</td><td>" + csvResponse[i][0] + "</td>" +
 							"<td>" + csvResponse[i][1] + "</td><td>" + time + "</td><td>" + csvResponse[i][3] + "</td></tr>");
-						$("#highscores table").append($csvRow);
+						$("#highScores table").append($csvRow);
 						
 						rank += 1;
 					}
@@ -783,7 +783,7 @@
 		},
 		updateViewDependencies: function (width, height) {
 			if (width) {
-				$("#canvas, #highscores, #home, #help, #maps .levelContainer, #gameViewUtils").width(width);
+				$("#canvas, #highScores, #home, #help, #maps .levelContainer, #gameViewUtils").width(width);
 				
 				SnakeView.alignMenuTabs(width);
 				$("#slidingMenu").css("left", SnakeView.slidingMenu[SnakeView.slidingMenuTab] + "px");
@@ -1323,24 +1323,24 @@
 	$("#mainMenu span").click(function () {
 		var action = $(this).text().toLowerCase();
 		
-		if (action === "highscores") {
+		if (action === "high scores") {
 			SnakeView.animateMenu("highScoresPos", function () {
-				SnakeView.loadHighScores(SnakeView.highscoresView);
+				SnakeView.loadHighScores(SnakeView.highScoresView);
 			});
 		} else {
 			SnakeView.selectDifficulty(action);
 		}
 		
-		if (action === "highscores" || action === "custom") {
+		if (action === "high scores" || action === "custom") {
 			$(".ui-resizable-handle").show();
 		}
 	});
 	
-	$("#highscoresView span").click(function () {
+	$("#highScoresView span").click(function () {
 		var difficulty = $(this).text().toLowerCase();
 		if (difficulty !== " | ") {
-			SnakeView.highscoresView = difficulty;
-			SnakeView.loadHighScores(SnakeView.highscoresView);
+			SnakeView.highScoresView = difficulty;
+			SnakeView.loadHighScores(SnakeView.highScoresView);
 		}
 	});
 
@@ -1382,10 +1382,10 @@
 			
 			SnakeHelpers.readjustWallSlider();
 			
-			// Deal with the number of highscores on display.
+			// Deal with the number of high scores on display.
 			if (SnakeView.slidingMenuTab === "highScoresPos") {
 				if (ui.originalSize.height < ui.size.height) {
-					SnakeView.loadHighScores(SnakeView.highscoresView);
+					SnakeView.loadHighScores(SnakeView.highScoresView);
 				} else {
 					var numOfScores, scoreRows, scoresToDelete;
 					

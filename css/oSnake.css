@@ -21,14 +21,14 @@ h1 {font-size:2.9em; font-weight:normal;}
 
 .ui-icon-gripsmall-diagonal-se {background-position:-80px -224px; width:15px; height:15px;}
 
-#highscores, #home, #help {float:left; height:100%;}
+#highScores, #home, #help {float:left; height:100%;}
 .centerBox {padding-bottom:5px;}
 .back {margin:1px 5px;}
-#highscores .back {float:right;}
+#highScores .back {float:right;}
 #help .back {float:left;}
 
-#highscoresView {float:left;}
-#highscoresView span {margin:1px 5px;}
+#highScoresView {float:left;}
+#highScoresView span {margin:1px 5px;}
 table {width:425px; display:block; margin:auto; margin-top:40px; border-collapse:collapse;}
 table td, table th {width:75px; height:20px; text-align:left;}
 table td:first-child, table th:first-child {width:50px;}
