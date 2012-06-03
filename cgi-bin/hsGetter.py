@@ -3,7 +3,7 @@
 import cgi
 
 request = cgi.FieldStorage()
-numOfHighscores = int(request.getvalue('amt'))
+scoresToLoad = int(request.getvalue('amt'))
 difficulty = request.getvalue('diff')
 
 # Print header
@@ -14,6 +14,6 @@ hsFile = open('cgi-bin/' + difficulty + 'HS.csv')
 for line in hsFile:
     print(line, end='')
 
-    numOfHighscores -= 1
-    if numOfHighscores == 0:
+    scoresToLoad -= 1
+    if scoresToLoad == 0:
         break

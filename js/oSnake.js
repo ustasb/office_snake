@@ -1415,7 +1415,6 @@
 			$("#enterName").append("<span>Saving...</span>");
 
 			handleSuccess = function(rank) {
-                print(rank)
 				$("#rank").text("Rank: " + rank);
 				$("#enterName span:last-child").text("Saved.");
 				$("#enterName input").attr("disabled", "disabled");

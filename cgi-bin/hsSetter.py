@@ -1,5 +1,6 @@
 #!/usr/local/bin/python3
 
+import os
 import cgi
 import time
 import re
@@ -18,7 +19,7 @@ print('Content-type: text/plain\r')
 print('\r')
 
 madeEntry = False
-hsFile = open('cgi-bin/' + pDifficulty + 'HS.csv', 'r')
+hsFile = open('cgi-bin/' + pDifficulty + 'HS.csv', 'r+')
 outfile = open('cgi-bin/tmp.txt', 'w+')
 
 for rank, line in enumerate(hsFile):
@@ -48,6 +49,8 @@ for rank, line in enumerate(hsFile):
 if madeEntry is False:
     print(rank)
     outfile.write(entry)
+
+os.rename('cgi-bin/tmp.txt', 'cgi-bin/' + pDifficulty + 'HS.csv')
 
 hsFile.close
 outfile.close
