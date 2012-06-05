@@ -4,10 +4,11 @@ pickup.js
 wall.js
 snakeSegment.js
 snake.js
-snakeCache.js
-snakeView.js
-snakeHelpers.js
-snakeEngine.js
+cache.js
+view.js
+helpers.js
+engine.js
 events.js
-highscores.js
+sha1.js
+highScoresOb.js
 init.js
