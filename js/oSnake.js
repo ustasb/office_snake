@@ -1170,44 +1170,45 @@
         powerUpToggleTime: 0,
         powerOn: function () {
             SnakeEngine.isOn = true;
-            SnakeEngine.tick();
             SnakeEngine.gameLoop();
+            SnakeEngine.tick();
         },
         gameLoop: function () {
-            if (SnakeEngine.isOn) {
-                
-                if (SnakeCache.enteringPortal) {
-                    SnakeHelpers.enterPortal();
-                } else {
-                    SnakeEngine.waitingForInput = true;
-                    
-                    // If animate() returns true, the snake is still alive.
-                    if (Snake.animate()) {
-                        
-                        if (Snake.segsToCreate !== 0) {
-                            (new SnakeSegment()).create();
-                            Snake.segsToCreate -= 1;
-                            
-                            if (Snake.segsToKill[0]) {
-                                // If dead segments are pending for removal and the snake grows, reapply the 'deadSnakeSeg' class.
-                                $(".deadSnakeSeg").removeClass("deadSnakeSeg");
-                                Snake.killSegments(Snake.segsToKill[0], Snake.segsToKill[1], true);
-                            }
-                        }
-                        
-                        if (Snake.segsToKill[0] > 0 && Snake.segsToKill[1] <= SnakeEngine.time) {
-                            Snake.removeDeadSegments(); // Remove the dead segments.
-                        }
-                        
-                    } else {
-                        SnakeEngine.isOn = false;
-                                                
-                        setTimeout(SnakeView.gameOver, 500);
-                    }
-                }
-                
-                setTimeout(SnakeEngine.gameLoop, Snake.speed);
+            if (!SnakeEngine.isOn) {
+                return;
             }
+
+            if (SnakeCache.enteringPortal) {
+                SnakeHelpers.enterPortal();
+            } else {
+                SnakeEngine.waitingForInput = true;
+                
+                // If animate() returns true, the snake is still alive.
+                if (Snake.animate()) {
+                    
+                    if (Snake.segsToCreate !== 0) {
+                        (new SnakeSegment()).create();
+                        Snake.segsToCreate -= 1;
+                        
+                        if (Snake.segsToKill[0]) {
+                            // If dead segments are pending for removal and the snake grows, reapply the 'deadSnakeSeg' class.
+                            $(".deadSnakeSeg").removeClass("deadSnakeSeg");
+                            Snake.killSegments(Snake.segsToKill[0], Snake.segsToKill[1], true);
+                        }
+                    }
+                    
+                    if (Snake.segsToKill[0] > 0 && Snake.segsToKill[1] <= SnakeEngine.time) {
+                        Snake.removeDeadSegments(); // Remove the dead segments.
+                    }
+                    
+                } else {
+                    SnakeEngine.isOn = false;
+                                            
+                    setTimeout(SnakeView.gameOver, 500);
+                }
+            }
+            
+            setTimeout(SnakeEngine.gameLoop, Snake.speed);
         },
         countdown: function (seconds) {
             if (seconds > 0) {
@@ -1231,8 +1232,9 @@
                 
                 var time = SnakeView.formatTimeStr(SnakeEngine.time);
                 $("#clock").text(time);
-
-                setTimeout(SnakeEngine.tick, 1000);
+                
+                clearTimeout(this.timer)
+                this.timer = setTimeout(SnakeEngine.tick, 1000);
             }
         },
         pause: function () {
