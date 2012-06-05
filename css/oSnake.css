@@ -1,4 +1,5 @@
-html, body, div, span, a, ul, ol, li, table, tr {margin:0; padding:0; font-family:'Lato', Arial, sans-serif; color:#afafaf; line-height:20px;}
+html, body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, input, textarea, p, blockquote, tr, th, td {margin:0; padding:0;}
+div, span, p, a, tr, th, td {font-family:'Lato', Arial, sans-serif; color:#afafaf; line-height:20px;}
 
 html {position:relative; height:100%; background-color:#111111; background-image:url(../images/tiles.png);}
 a {outline:none;}
