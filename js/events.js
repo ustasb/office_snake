@@ -1,4 +1,4 @@
-$(document).keydown(function (event) {
+$(document.body).keydown(function (event) {
     var key = event.keyCode;
     
     // Prevents the player from immediately reversing directions via cycling directions.
@@ -80,7 +80,7 @@ $("#highScoresView span").click(function () {
     }
 });
 
-$("#ready span").click(function () {
+$("#ready").click(function () {
     if (SnakeCache.session.difficulty === "custom") {
         $(".ui-resizable-handle").hide();
     }
