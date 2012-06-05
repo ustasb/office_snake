@@ -1,23 +1,23 @@
-var SnakeEngine = {
+var Engine = {
     isOn: false,
     waitingForInput: true,
     time: 0,
     powerUpDuration: 5,
     powerUpToggleTime: 0,
     powerOn: function () {
-        SnakeEngine.isOn = true;
-        SnakeEngine.gameLoop();
-        SnakeEngine.tick();
+        Engine.isOn = true;
+        Engine.gameLoop();
+        Engine.tick();
     },
     gameLoop: function () {
-        if (!SnakeEngine.isOn) {
+        if (!Engine.isOn) {
             return;
         }
 
-        if (SnakeCache.enteringPortal) {
-            SnakeHelpers.enterPortal();
+        if (Cache.enteringPortal) {
+            Helpers.enterPortal();
         } else {
-            SnakeEngine.waitingForInput = true;
+            Engine.waitingForInput = true;
             
             // If animate() returns true, the snake is still alive.
             if (Snake.animate()) {
@@ -33,55 +33,55 @@ var SnakeEngine = {
                     }
                 }
                 
-                if (Snake.segsToKill[0] > 0 && Snake.segsToKill[1] <= SnakeEngine.time) {
+                if (Snake.segsToKill[0] > 0 && Snake.segsToKill[1] <= Engine.time) {
                     Snake.removeDeadSegments(); // Remove the dead segments.
                 }
                 
             } else {
-                SnakeEngine.isOn = false;
+                Engine.isOn = false;
                                         
-                setTimeout(SnakeView.gameOver, 500);
+                setTimeout(View.gameOver, 500);
             }
         }
         
-        setTimeout(SnakeEngine.gameLoop, Snake.speed);
+        setTimeout(Engine.gameLoop, Snake.speed);
     },
     countdown: function (seconds) {
         if (seconds > 0) {
             $("#countdown div:last-child").text(seconds);
         
             setTimeout(function () {
-                SnakeEngine.countdown(seconds - 1);
+                Engine.countdown(seconds - 1);
             }, 1000);
         } else {
             $("#countdown").remove();
-            SnakeEngine.powerOn();
+            Engine.powerOn();
         }
     },
     tick: function () {
-        if (SnakeEngine.isOn) {
-            SnakeEngine.time += 1;
+        if (Engine.isOn) {
+            Engine.time += 1;
             
-            if (SnakeEngine.time >= (SnakeEngine.powerUpToggleTime + SnakeEngine.powerUpDuration)) {
+            if (Engine.time >= (Engine.powerUpToggleTime + Engine.powerUpDuration)) {
                 PickUp.togglePowerUp();
             }
             
-            var time = SnakeView.formatTimeStr(SnakeEngine.time);
+            var time = View.formatTimeStr(Engine.time);
             $("#clock").text(time);
             
             clearTimeout(this.timer)
-            this.timer = setTimeout(SnakeEngine.tick, 1000);
+            this.timer = setTimeout(Engine.tick, 1000);
         }
     },
     pause: function () {
-        if (SnakeEngine.isOn) {
-            SnakeEngine.isOn = false;
+        if (Engine.isOn) {
+            Engine.isOn = false;
             
             if (document.getElementById("powerUpTimeBar")) {
                 $("#powerUpTimeBar").stop();
             }
             
-            SnakeView.centerElement($("#pauseMenu")).show();
+            View.centerElement($("#pauseMenu")).show();
         }
     },
     resume: function () {
@@ -89,10 +89,10 @@ var SnakeEngine = {
         
         // The time remaining on the power-up before the pause.
         if (document.getElementById("powerUpTimeBar")) {
-            var powerUpTimeRemain = (SnakeEngine.powerUpToggleTime + SnakeEngine.powerUpDuration) - SnakeEngine.time;
-            SnakeView.powerUpTimeBar(powerUpTimeRemain);
+            var powerUpTimeRemain = (Engine.powerUpToggleTime + Engine.powerUpDuration) - Engine.time;
+            View.powerUpTimeBar(powerUpTimeRemain);
         }
         
-        SnakeEngine.powerOn();
+        Engine.powerOn();
     }
 };

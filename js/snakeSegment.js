@@ -20,8 +20,8 @@ SnakeSegment.prototype = {
             this.tilePos = this.leaderSegment.previousTilePos;
         }
         
-        SnakeHelpers.drawObjToTile(this, true);
-        $("#level_" + SnakeCache.session.level).append(this.$html);
+        Helpers.drawObjToTile(this, true);
+        $("#level_" + Cache.session.level).append(this.$html);
     },
     moveHead: function () {
         var attr;
@@ -29,24 +29,24 @@ SnakeSegment.prototype = {
 
         switch (Snake.head.direction) {
         case "n":
-            this.tilePos[0] = (this.tilePos[0] === 0) ? SnakeCache.tilesYLimit : this.tilePos[0] -= 1;
+            this.tilePos[0] = (this.tilePos[0] === 0) ? Cache.tilesYLimit : this.tilePos[0] -= 1;
             attr = "top";
             break;
         case "e":
-            this.tilePos[1] = (this.tilePos[1] === SnakeCache.tilesXLimit) ? 0 : this.tilePos[1] += 1;
+            this.tilePos[1] = (this.tilePos[1] === Cache.tilesXLimit) ? 0 : this.tilePos[1] += 1;
             attr = "left";
             break;
         case "s":
-            this.tilePos[0] = (this.tilePos[0] === SnakeCache.tilesYLimit) ? 0 : this.tilePos[0] += 1;
+            this.tilePos[0] = (this.tilePos[0] === Cache.tilesYLimit) ? 0 : this.tilePos[0] += 1;
             attr = "top";
             break;
         case "w":
-            this.tilePos[1] = (this.tilePos[1] === 0) ? SnakeCache.tilesXLimit : this.tilePos[1] -= 1;
+            this.tilePos[1] = (this.tilePos[1] === 0) ? Cache.tilesXLimit : this.tilePos[1] -= 1;
             attr = "left";
             break;
         }
 
-        SnakeHelpers.drawObjToTile(this, false, attr);
+        Helpers.drawObjToTile(this, false, attr);
 
         // If humans are in range, make them frown.
         PickUp.toggleSmile(Snake.head);
@@ -55,10 +55,10 @@ SnakeSegment.prototype = {
         this.previousTilePos = this.tilePos;
         this.tilePos = this.leaderSegment.previousTilePos;
 
-        SnakeHelpers.drawObjToTile(this, true);
+        Helpers.drawObjToTile(this, true);
     },
     destroy: function (keepHtml) {
-        SnakeCache.tiles[this.tilePos[0]][this.tilePos[1]].obj = undefined;
+        Cache.tiles[this.tilePos[0]][this.tilePos[1]].obj = undefined;
 
         for (var i = 0, j = Snake.segments.length; i < j; i++) {
             if (this === Snake.segments[i]) {

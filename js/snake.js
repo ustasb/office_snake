@@ -25,11 +25,11 @@ var Snake = {
             }
             
             if (i === j - 1) { // Empty the last segment's previous tile of any objects.
-                SnakeCache.tiles[segment.previousTilePos[0]][segment.previousTilePos[1]].obj = undefined;
+                Cache.tiles[segment.previousTilePos[0]][segment.previousTilePos[1]].obj = undefined;
             }
         }
         
-        headTile = SnakeCache.tiles[Snake.head.tilePos[0]][Snake.head.tilePos[1]];
+        headTile = Cache.tiles[Snake.head.tilePos[0]][Snake.head.tilePos[1]];
         hitObj = headTile.obj;
         headTile.obj = Snake.head;
         
@@ -54,23 +54,23 @@ var Snake = {
     },
     eat: function (matchedItem) {
         if (matchedItem.type === "human") {
-            SnakeView.updateScore(10);
+            View.updateScore(10);
             
             Snake.segsToCreate += 1;
             
-            if (SnakeCache.session.humanCount <= SnakeCache.session.humansPresent) {
+            if (Cache.session.humanCount <= Cache.session.humansPresent) {
                 (new PickUp("human")).create();
             }
         } else if (matchedItem.type === "portal") {
-            SnakeCache.session.segments = Snake.segments.length;
+            Cache.session.segments = Snake.segments.length;
             
             // Create the illusion that the snake has entered the portal.
             Snake.head.$html.css("backgroundColor", "#afafaf");
-            if (SnakeCache.session.activePowerUp && SnakeCache.session.activePowerUp.type !== "shrink") {
-                $(".head").removeClass("pickUp " + SnakeCache.session.activePowerUp.type);
+            if (Cache.session.activePowerUp && Cache.session.activePowerUp.type !== "shrink") {
+                $(".head").removeClass("pickUp " + Cache.session.activePowerUp.type);
             }
             
-            SnakeCache.enteringPortal = true;
+            Cache.enteringPortal = true;
         } else { // Must be a power-up.
             matchedItem.togglePowerUp();
         }
@@ -92,7 +92,7 @@ var Snake = {
             hitWall.destroy();
             Snake.segsToCreate += 1;
         }
-        SnakeView.updateScore(wallPoints);
+        View.updateScore(wallPoints);
         Wall.updateNeighborWalls();
         
         return true; // The snake is still alive.
@@ -105,7 +105,7 @@ var Snake = {
         }
         
         Snake.segsToKill[0] = segsToKill;
-        Snake.segsToKill[1] = time || (SnakeEngine.time + 1);
+        Snake.segsToKill[1] = time || (Engine.time + 1);
         
         for (var i = 1; i <= segsToKill; i++) {
             tempSeg = Snake.segments[Snake.segments.length - i];
@@ -132,6 +132,6 @@ var Snake = {
         }
         
         lastObj = Snake.segments[Snake.segments.length - 1];
-        SnakeCache.tiles[lastObj.tilePos[0]][lastObj.tilePos[1]].obj = undefined;
+        Cache.tiles[lastObj.tilePos[0]][lastObj.tilePos[1]].obj = undefined;
     }
 };

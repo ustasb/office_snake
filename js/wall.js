@@ -1,5 +1,5 @@
 function Wall(givenTilePos) {
-    SnakeCache.walls.push(this);
+    Cache.walls.push(this);
     
     this.$html = $("<div class='wall'></div>");
     this.tilePos = givenTilePos;
@@ -24,11 +24,11 @@ Wall.generateWallPattern = function (wallsToCreate) {
     while (i < wallsToCreate) {
 
         if (i % seed === 0) {
-            newTilePos = SnakeHelpers.findEmptyTile();
+            newTilePos = Helpers.findEmptyTile();
             if (!validPos(newTilePos, bannedPosns)) {
                 continue;
             }
-            if (SnakeHelpers.getSurroundingObjs(newTilePos, Wall).length > 2) {
+            if (Helpers.getSurroundingObjs(newTilePos, Wall).length > 2) {
                 bannedPosns.push(newTilePos);
                 continue;
             }
@@ -38,7 +38,7 @@ Wall.generateWallPattern = function (wallsToCreate) {
             do {
                 if (freeDirections.length === 0) {
                     bannedPosns.push(parentWall.tilePos);
-                    parentWall = SnakeCache.walls[Math.floor(Math.random() * SnakeCache.walls.length)];
+                    parentWall = Cache.walls[Math.floor(Math.random() * Cache.walls.length)];
                     if (validPos(parentWall.tilePos, bannedPosns)) {
                         freeDirections = allDirections.slice(0);
                     } else {
@@ -66,10 +66,10 @@ Wall.generateWallPattern = function (wallsToCreate) {
                 
                 if (newTilePos[0] < 1 ||
                     newTilePos[1] < 0 ||
-                    newTilePos[0] > SnakeCache.tilesYLimit ||
-                    newTilePos[1] > SnakeCache.tilesXLimit || 
-                    SnakeCache.tiles[newTilePos[0]][newTilePos[1]].obj ||
-                    SnakeHelpers.getSurroundingObjs(newTilePos, Wall).length > 2) {
+                    newTilePos[0] > Cache.tilesYLimit ||
+                    newTilePos[1] > Cache.tilesXLimit || 
+                    Cache.tiles[newTilePos[0]][newTilePos[1]].obj ||
+                    Helpers.getSurroundingObjs(newTilePos, Wall).length > 2) {
                     bannedPosns.push(newTilePos);
                     newTilePos = false;
                     for (var a = 0, b = freeDirections.length; a < b; a++) {
@@ -91,13 +91,13 @@ Wall.generateWallPattern = function (wallsToCreate) {
 
 Wall.plantBombs = function (bombsPercent) {
     bombsPercent = (bombsPercent || bombsPercent === 0) ? bombsPercent : 0.5;
-    var wall, bombsToCreate = Math.floor(SnakeCache.walls.length * bombsPercent);
+    var wall, bombsToCreate = Math.floor(Cache.walls.length * bombsPercent);
     
-    SnakeCache.session.gems = SnakeCache.walls.length - bombsToCreate;
-    SnakeView.updateChallengeInfo(SnakeCache.session.level, SnakeCache.session.gems);
+    Cache.session.gems = Cache.walls.length - bombsToCreate;
+    View.updateChallengeInfo(Cache.session.level, Cache.session.gems);
     
     while (bombsToCreate) {
-        wall = SnakeCache.walls[Math.floor(Math.random() * SnakeCache.walls.length)];
+        wall = Cache.walls[Math.floor(Math.random() * Cache.walls.length)];
         if (!wall.hasBomb) {
             wall.hasBomb = true;
             bombsToCreate -= 1;
@@ -106,9 +106,9 @@ Wall.plantBombs = function (bombsPercent) {
 };
 
 Wall.updateBombHints = function () {
-    for (var i = 0, j = SnakeCache.walls.length; i < j; i++) {
+    for (var i = 0, j = Cache.walls.length; i < j; i++) {
         var nearbyBombCount = 0,
-            touchingWalls = SnakeHelpers.getSurroundingObjs(SnakeCache.walls[i].tilePos, Wall);
+            touchingWalls = Helpers.getSurroundingObjs(Cache.walls[i].tilePos, Wall);
         
         for (var a = 0, b = touchingWalls.length; a < b; a++) {
             if (touchingWalls[a].hasBomb) {
@@ -116,17 +116,17 @@ Wall.updateBombHints = function () {
             }
         }
         
-        SnakeCache.walls[i].$html.text(nearbyBombCount);
+        Cache.walls[i].$html.text(nearbyBombCount);
     }
 };
 
 Wall.updateNeighborWalls = function () { // Update bomb hints and replace island, bomb-occupied walls with a human.
     var nearbyBombCount, touchingWalls, wallTilePos,
-        wallsSurroundingHead = SnakeHelpers.getSurroundingObjs(Snake.head.tilePos, Wall);
+        wallsSurroundingHead = Helpers.getSurroundingObjs(Snake.head.tilePos, Wall);
     
     for (var i = 0, j = wallsSurroundingHead.length; i < j; i++) {
         nearbyBombCount = 0;
-        touchingWalls = SnakeHelpers.getSurroundingObjs(wallsSurroundingHead[i].tilePos, Wall);
+        touchingWalls = Helpers.getSurroundingObjs(wallsSurroundingHead[i].tilePos, Wall);
         
         if (touchingWalls.length === 0 && wallsSurroundingHead[i].hasBomb) {
             wallTilePos = wallsSurroundingHead[i].tilePos;
@@ -147,17 +147,17 @@ Wall.updateNeighborWalls = function () { // Update bomb hints and replace island
 
 Wall.prototype = {
     build: function () {
-        SnakeHelpers.drawObjToTile(this, true);
-        $("#level_" + SnakeCache.session.level).append(this.$html);
+        Helpers.drawObjToTile(this, true);
+        $("#level_" + Cache.session.level).append(this.$html);
     },
     explode: function () {
         var $explosion = $("<div class='explosion'></div>");
         $explosion.css({
-            left: SnakeCache.tiles[this.tilePos[0]][this.tilePos[1]].left - SnakeCache.literals.tileWidth,
-            top: SnakeCache.tiles[this.tilePos[0]][this.tilePos[1]].top - SnakeCache.literals.tileHeight    
+            left: Cache.tiles[this.tilePos[0]][this.tilePos[1]].left - Cache.literals.tileWidth,
+            top: Cache.tiles[this.tilePos[0]][this.tilePos[1]].top - Cache.literals.tileHeight    
         });            
         
-        $explosion.appendTo("#level_" + SnakeCache.session.level);
+        $explosion.appendTo("#level_" + Cache.session.level);
         this.destroy();
         
         setTimeout(function () {
@@ -165,19 +165,19 @@ Wall.prototype = {
         }, 200);
     },
     destroy: function (keepHtml) {
-        SnakeCache.tiles[this.tilePos[0]][this.tilePos[1]].obj = undefined;
+        Cache.tiles[this.tilePos[0]][this.tilePos[1]].obj = undefined;
         
-        for (var i = 0, j = SnakeCache.walls.length; i < j; i++) {
-            if (this === SnakeCache.walls[i]) {
-                SnakeCache.walls.splice(i, 1);
+        for (var i = 0, j = Cache.walls.length; i < j; i++) {
+            if (this === Cache.walls[i]) {
+                Cache.walls.splice(i, 1);
             }
         }
 
         if (!this.hasBomb) {
-            SnakeCache.session.gems -= 1;
-            SnakeView.updateChallengeInfo(SnakeCache.session.level, SnakeCache.session.gems);
+            Cache.session.gems -= 1;
+            View.updateChallengeInfo(Cache.session.level, Cache.session.gems);
             
-            if (SnakeCache.session.gems === 0 && SnakeCache.session.difficulty === "challenge") {
+            if (Cache.session.gems === 0 && Cache.session.difficulty === "challenge") {
                 (new PickUp("portal")).create();
             }
         }

@@ -1,4 +1,4 @@
-var SnakeView = {
+var View = {
     // Record what the gameContainer's dimensions should be because the browser
     // can't be expected to return accurate measurements when zooming.
     gameContWidth: 0,
@@ -26,18 +26,18 @@ var SnakeView = {
             
             // Sanitize arguments
             width = (width > 500) ? width : 500;
-            width -= (width % SnakeCache.literals.tileWidth);
+            width -= (width % Cache.literals.tileWidth);
             height = (height > 500) ? height : 500;
-            height -= (height % SnakeCache.literals.tileHeight);
+            height -= (height % Cache.literals.tileHeight);
             
-            SnakeView.updateGameContainer(width, height);
-            SnakeView.updateViewDependencies(width, height);
+            View.updateGameContainer(width, height);
+            View.updateViewDependencies(width, height);
             
             var maxWidth = $(window).width() / 1.3,
                 maxHeight = $(window).height() / 1.3;            
             
-            maxWidth -= (maxWidth % SnakeCache.literals.tileWidth);
-            maxHeight -= (maxHeight % SnakeCache.literals.tileHeight);
+            maxWidth -= (maxWidth % Cache.literals.tileWidth);
+            maxHeight -= (maxHeight % Cache.literals.tileHeight);
             
             maxWidth = (maxWidth > width) ? maxWidth : width + 100;
             maxHeight = (maxHeight > height) ? maxHeight : height + 100;
@@ -54,13 +54,13 @@ var SnakeView = {
         var currentTime = (new Date()).getTime();
         
         // Prevents the user from overloading the server with requests.
-        if (currentTime - SnakeView.hsRequestTime > 250) {
+        if (currentTime - View.hsRequestTime > 250) {
             var scorePadding, scoresToLoad, handleSuccess;
             
-            SnakeView.hsRequestTime = (new Date()).getTime();
+            View.hsRequestTime = (new Date()).getTime();
             
-            scorePadding = 4 * SnakeCache.literals.tileHeight;
-            scoresToLoad = Math.floor((SnakeView.gameContHeight - scorePadding) / SnakeCache.literals.tileHeight);
+            scorePadding = 4 * Cache.literals.tileHeight;
+            scoresToLoad = Math.floor((View.gameContHeight - scorePadding) / Cache.literals.tileHeight);
             
             $("#" + difficulty + "View").css("text-decoration", "underline")
             .siblings().css("text-decoration", "none");
@@ -81,7 +81,7 @@ var SnakeView = {
                 
                 for (var i = 0, j = csvResponse.length; i < j; i++) {
                     csvResponse[i] = csvResponse[i].split(",");
-                    time = SnakeView.formatTimeStr(csvResponse[i][2]);
+                    time = View.formatTimeStr(csvResponse[i][2]);
                     if (time.length < 3) {
                         time += "s";
                     }
@@ -103,9 +103,9 @@ var SnakeView = {
     alignMenuTabs: function (width) { // Sets the 'left' positions of the sliding menu tabs.
         var posLeft, posIncrement = 0;
         
-        for (posLeft in SnakeView.slidingMenu) {
-            if (SnakeView.slidingMenu.hasOwnProperty(posLeft)) {
-                SnakeView.slidingMenu[posLeft] = posIncrement;
+        for (posLeft in View.slidingMenu) {
+            if (View.slidingMenu.hasOwnProperty(posLeft)) {
+                View.slidingMenu[posLeft] = posIncrement;
                 posIncrement -= width;
             }
         }
@@ -125,10 +125,10 @@ var SnakeView = {
         }    
     },
     animateMenu: function (menuTab, callback) {
-        SnakeView.slidingMenuTab = menuTab;
+        View.slidingMenuTab = menuTab;
         
         $("#slidingMenu").animate({
-            "left" : SnakeView.slidingMenu[menuTab] + "px"
+            "left" : View.slidingMenu[menuTab] + "px"
         }, {
             duration: "slow",
             queue: false,
@@ -136,14 +136,14 @@ var SnakeView = {
         });
     },
     alignGameWinToGrid: function (tileWidth, tileHeight) {
-        var validWidth = SnakeView.gameContWidth,
-            validHeight = SnakeView.gameContHeight;
+        var validWidth = View.gameContWidth,
+            validHeight = View.gameContHeight;
         
-        validWidth -= SnakeView.gameContWidth % tileWidth;
-        validHeight -= SnakeView.gameContHeight % tileHeight;
+        validWidth -= View.gameContWidth % tileWidth;
+        validHeight -= View.gameContHeight % tileHeight;
         
-        SnakeView.updateGameContainer(validWidth, validHeight);
-        SnakeView.updateViewDependencies(validWidth, validHeight);
+        View.updateGameContainer(validWidth, validHeight);
+        View.updateViewDependencies(validWidth, validHeight);
     },
     centerElement: function ($element, $parent) {
         var topPad, attr;
@@ -159,7 +159,7 @@ var SnakeView = {
     updateChallengeInfo: function (level, gems) {
         var progress = "Hidden Humans: " + gems;
         
-        if (SnakeCache.session.difficulty === "challenge") {
+        if (Cache.session.difficulty === "challenge") {
             progress = "Level: " + level + " | " + progress;
         }
         
@@ -172,15 +172,15 @@ var SnakeView = {
         .width(width)
         .height(height);
 
-        SnakeView.gameContWidth = width;
-        SnakeView.gameContHeight = height;
+        View.gameContWidth = width;
+        View.gameContHeight = height;
     },
     updateViewDependencies: function (width, height) {
         if (width) {
             $("#canvas, #highScores, #home, #help, #maps .levelContainer, #gameViewUtils").width(width);
             
-            SnakeView.alignMenuTabs(width);
-            $("#slidingMenu").css("left", SnakeView.slidingMenu[SnakeView.slidingMenuTab] + "px");
+            View.alignMenuTabs(width);
+            $("#slidingMenu").css("left", View.slidingMenu[View.slidingMenuTab] + "px");
         }
         
         if (height) {
@@ -188,19 +188,19 @@ var SnakeView = {
         }
         
         $(".centerBox").each(function () {
-            SnakeView.centerElement($(this));
+            View.centerElement($(this));
         });
     },
     selectDifficulty: function (difficulty) {
-        SnakeCache.session.difficulty = difficulty;
+        Cache.session.difficulty = difficulty;
         $("#selectedDifficulty").text("difficulty: " + difficulty);
         
         if (difficulty === "custom") {
             $(".challengeInfo, #instructions, #pickUpCtrlInfo").hide();
             $("#custom, #snakeHUD .challengeInfo").show();
             
-            SnakeView.centerElement($("#help .centerBox"));
-            SnakeHelpers.readjustWallSlider();
+            View.centerElement($("#help .centerBox"));
+            Helpers.readjustWallSlider();
         } else {
             $("#custom").hide();
             $("#instructions, #pickUpCtrlInfo").show();
@@ -211,45 +211,45 @@ var SnakeView = {
                 $(".challengeInfo").show();
             }
             
-            var topPad = ($(document).height() - SnakeCache.literals.compHeight) / 2;
+            var topPad = ($(document).height() - Cache.literals.compHeight) / 2;
             
             $("#gameContainer").animate({
-                width : SnakeCache.literals.compWidth + "px",
-                height: SnakeCache.literals.compHeight + "px",
+                width : Cache.literals.compWidth + "px",
+                height: Cache.literals.compHeight + "px",
                 top: topPad + "px"
             }, {
                 duration: "slow",
                 queue: false,
                 step: function (now, fx) {
                     if (fx.prop === "width") {
-                        SnakeView.gameContWidth = now;
-                        SnakeView.updateViewDependencies(now);
+                        View.gameContWidth = now;
+                        View.updateViewDependencies(now);
                     } else if (fx.prop === "height") {
-                        SnakeView.gameContHeight = now;
-                        SnakeView.updateViewDependencies(false, now);
+                        View.gameContHeight = now;
+                        View.updateViewDependencies(false, now);
                     }
                 }
             });
             
-            SnakeView.alignMenuTabs(SnakeCache.literals.compWidth);
+            View.alignMenuTabs(Cache.literals.compWidth);
         }
         
-        SnakeView.animateMenu("helpPos");
+        View.animateMenu("helpPos");
     },
     updateScore: function (points) {
-        points = (SnakeEngine.activeDblPoints) ? points * 2 : points;
-        SnakeCache.session.score += points;
+        points = (Engine.activeDblPoints) ? points * 2 : points;
+        Cache.session.score += points;
         
-        $("#scoreBar").text(SnakeCache.session.score + "pts");
+        $("#scoreBar").text(Cache.session.score + "pts");
 
         points = (points > 0) ? "+" + points : points;
         $("#pointAddition").html("<span>" + points + "pts<span>");
         
-        if (SnakeCache.addedPtsTimer) {
-            clearTimeout(SnakeCache.addedPtsTimer);
+        if (Cache.addedPtsTimer) {
+            clearTimeout(Cache.addedPtsTimer);
         }
         
-        SnakeCache.addedPtsTimer = setTimeout(function () {
+        Cache.addedPtsTimer = setTimeout(function () {
             if ($.browser && $.browser.msie && $.browser.version < 9.0) {
                 // This is an IE < 9 fix. Firstly, fadeout() is too processor intensive for IE and slows the game down noticeably.
                 // It is, however, a desirable effect for faster browsers.
@@ -262,18 +262,18 @@ var SnakeView = {
         }, 1000);
     },
     buildLevel: function () {
-        $('<div id="levelContainer_' + SnakeCache.session.level + '" class="levelContainer"></div>')
-        .width(SnakeView.gameContWidth)
-        .append('<div id="level_' + SnakeCache.session.level + '" class="level"><div id="countdown"><div>3</div></div></div>')
+        $('<div id="levelContainer_' + Cache.session.level + '" class="levelContainer"></div>')
+        .width(View.gameContWidth)
+        .append('<div id="level_' + Cache.session.level + '" class="level"><div id="countdown"><div>3</div></div></div>')
         .appendTo("#mapsIE7Fix");
         
-        if (SnakeCache.session.difficulty === "challenge") {
-            $("#countdown").prepend("<div id='currentLevel'>Level " + SnakeCache.session.level + "</div>");
+        if (Cache.session.difficulty === "challenge") {
+            $("#countdown").prepend("<div id='currentLevel'>Level " + Cache.session.level + "</div>");
         } else {
-            SnakeView.centerElement($("#countdown div"), $("#countdown"));
+            View.centerElement($("#countdown div"), $("#countdown"));
         }
         
-        SnakeView.centerElement($("#countdown"));
+        View.centerElement($("#countdown"));
     },
     powerUpTimeBar: function (time) {
         time *= 1000; // Convert to milliseconds.
@@ -289,59 +289,59 @@ var SnakeView = {
         });
     },
     initSession: function () {
-        if (SnakeCache.session.difficulty !== "custom") {
+        if (Cache.session.difficulty !== "custom") {
             Snake.segsToCreate = Snake.initSegs;
-            SnakeEngine.powerUpDuration = 5;
+            Engine.powerUpDuration = 5;
         }
         
-        switch (SnakeCache.session.difficulty) {
+        switch (Cache.session.difficulty) {
         case "classic":
             Snake.speed = 76;
-            SnakeCache.session.humansPresent = 3;
+            Cache.session.humansPresent = 3;
             break;
         case "challenge":
             Snake.speed = 120;
-            SnakeCache.session.humansPresent = 0;
+            Cache.session.humansPresent = 0;
             
             // Determine the final level based on the level size.
-            var maxWalls = SnakeHelpers.getMaxWalls();
-            SnakeCache.session.finalLevel = maxWalls / SnakeCache.literals.wallMultiplier;
+            var maxWalls = Helpers.getMaxWalls();
+            Cache.session.finalLevel = maxWalls / Cache.literals.wallMultiplier;
             break;
         case "custom":
             // -1 because the snake's head is always generated.
             Snake.segsToCreate = $("#startingLengthSlider").slider("value") - 1;
-            SnakeCache.session.humansPresent = $("#humansPresentSlider").slider("value");
-            SnakeEngine.powerUpDuration = $("#powerUpDurationSlider").slider("value");
+            Cache.session.humansPresent = $("#humansPresentSlider").slider("value");
+            Engine.powerUpDuration = $("#powerUpDurationSlider").slider("value");
             // Convert the speed to appropriate milliseconds.
             Snake.speed = ($("#speedSlider").slider("option", "max") - $("#speedSlider").slider("value")) * 10 + 20;
             break;
         }
         
-        SnakeHelpers.buildTiles();
-        SnakeView.buildLevel();
-        SnakeHelpers.prepareLevel(Snake.initSegs, SnakeCache.session.humansPresent);
+        Helpers.buildTiles();
+        View.buildLevel();
+        Helpers.prepareLevel(Snake.initSegs, Cache.session.humansPresent);
     },
     resetSession: function () {
-        SnakeCache.resetCache();
+        Cache.resetCache();
         
-        SnakeEngine.powerUpToggleTime = 0;
+        Engine.powerUpToggleTime = 0;
         
         $("#pauseMenu").hide();
-        $("#clock").text(SnakeEngine.time = 0);
-        $("#scoreBar").text(SnakeCache.session.score + "pts");
+        $("#clock").text(Engine.time = 0);
+        $("#scoreBar").text(Cache.session.score + "pts");
     },
     gameOver: function () {
         if (document.getElementById("powerUpTimeBar")) {
             $("#powerUpTimeBar").stop();
         }
         
-        $("#score").text("Score: " + SnakeCache.session.score);
+        $("#score").text("Score: " + Cache.session.score);
         $("#rank").text("Rank: -");
         
-        if (SnakeCache.session.difficulty === "custom") {
+        if (Cache.session.difficulty === "custom") {
             $("#rank, #enterName").hide();
         } else {
-            if (SnakeCache.session.score >= 100) {
+            if (Cache.session.score >= 100) {
                 $("input[name='name']").val("").removeAttr("disabled");
                 $("#enterName span:last-child").attr("id", "submit").text("Submit");
                 $("#rank, #enterName").show();
@@ -350,12 +350,12 @@ var SnakeView = {
             }
         }
         
-        $("#gameOver").appendTo("#level_" + SnakeCache.session.level).width(SnakeView.gameContWidth);
+        $("#gameOver").appendTo("#level_" + Cache.session.level).width(View.gameContWidth);
         $("#gameOver").show();
-        SnakeView.centerElement($("#gameOver"));
+        View.centerElement($("#gameOver"));
         $("#enterName input").focus();
     },
     removeLevel: function (level) {
-        $("#levelContainer_" + level || SnakeCache.session.level).remove();
+        $("#levelContainer_" + level || Cache.session.level).remove();
     }
 };

@@ -1,38 +1,38 @@
-var SnakeHelpers = {
-    // A tile can be retrieved from SnakeCache.tiles via SnakeCache.tiles[y][x].
+var Helpers = {
+    // A tile can be retrieved from Cache.tiles via Cache.tiles[y][x].
     buildTiles: function () {
         // The top starts displaced by 20px to account for the HUD.
-        var i = 0, x = 0, y = SnakeCache.literals.tileHeight;
+        var i = 0, x = 0, y = Cache.literals.tileHeight;
             
-        while (x < SnakeView.gameContWidth && y < SnakeView.gameContHeight) {
-            SnakeCache.tiles[i].push({left: x, top: y, obj: undefined});
-            x += SnakeCache.literals.tileWidth;
+        while (x < View.gameContWidth && y < View.gameContHeight) {
+            Cache.tiles[i].push({left: x, top: y, obj: undefined});
+            x += Cache.literals.tileWidth;
             
-            if (x === SnakeView.gameContWidth) {
-                SnakeCache.tiles.push([]);
+            if (x === View.gameContWidth) {
+                Cache.tiles.push([]);
                 x = 0;
-                y += SnakeCache.literals.tileHeight;
+                y += Cache.literals.tileHeight;
                 i += 1;
             }
         }
         
         // Positions are zero-based thus subtract 1 from the length.
-        SnakeCache.tilesYLimit = SnakeCache.tiles.length - 2;
-        SnakeCache.tilesXLimit = SnakeCache.tiles[0].length - 1;
+        Cache.tilesYLimit = Cache.tiles.length - 2;
+        Cache.tilesXLimit = Cache.tiles[0].length - 1;
     },
     findEmptyTile: function () {
         var rndX, rndY;
     
         do {
-            rndX = Math.round(Math.random() * SnakeCache.tilesXLimit);
+            rndX = Math.round(Math.random() * Cache.tilesXLimit);
             // +1 to shift all positions below the first row.
-            rndY = Math.floor(Math.random() * SnakeCache.tilesYLimit) + 1;
-        } while (!SnakeCache.tiles[rndY][rndX] || SnakeCache.tiles[rndY][rndX].obj);
+            rndY = Math.floor(Math.random() * Cache.tilesYLimit) + 1;
+        } while (!Cache.tiles[rndY][rndX] || Cache.tiles[rndY][rndX].obj);
 
         return [rndY, rndX];
     },
     drawObjToTile: function (obj, updateTileObj, attr) {
-        var tile = SnakeCache.tiles[obj.tilePos[0]][obj.tilePos[1]];
+        var tile = Cache.tiles[obj.tilePos[0]][obj.tilePos[1]];
         
         if (updateTileObj) {
             tile.obj = obj;
@@ -56,13 +56,13 @@ var SnakeHelpers = {
         
         // Search the 8 surrounding tiles.
         while (y !== maxY && x !== maxX) {
-            if (y <= SnakeCache.tilesYLimit &&
+            if (y <= Cache.tilesYLimit &&
                 y >= 0 &&
                 x >= 0 &&
-                x <= SnakeCache.tilesXLimit &&
+                x <= Cache.tilesXLimit &&
                 (y !== tilePos[0] || x !== tilePos[1]) &&
-                SnakeCache.tiles[y][x].obj instanceof (classFilter || Object)) {
-                surroundingObjs.push(SnakeCache.tiles[y][x].obj);
+                Cache.tiles[y][x].obj instanceof (classFilter || Object)) {
+                surroundingObjs.push(Cache.tiles[y][x].obj);
             }
             
             y += 1;
@@ -77,8 +77,8 @@ var SnakeHelpers = {
     },
     getMaxWalls: function () {
         // -40 to account for the HUD and first, neutral row.
-        var maxWalls = (SnakeView.gameContWidth * (SnakeView.gameContHeight - 40)) /
-                (SnakeCache.literals.tileWidth * SnakeCache.literals.tileHeight);
+        var maxWalls = (View.gameContWidth * (View.gameContHeight - 40)) /
+                (Cache.literals.tileWidth * Cache.literals.tileHeight);
         maxWalls *= 0.40;
         maxWalls -= (maxWalls % 10);
         
@@ -87,7 +87,7 @@ var SnakeHelpers = {
     readjustWallSlider: function () {
         var maxWalls, sliderValue;
         
-        maxWalls = SnakeHelpers.getMaxWalls();
+        maxWalls = Helpers.getMaxWalls();
         $("#walls + .slider").slider("option", "max", maxWalls);
         
         sliderValue = maxWalls / 2;
@@ -95,46 +95,46 @@ var SnakeHelpers = {
         $("#walls").children("span").text(sliderValue);
     },
     nextLevel: function () {
-        var priorLevel = SnakeCache.session.level;
+        var priorLevel = Cache.session.level;
         
-        if (SnakeCache.session.level === SnakeCache.session.finalLevel) {
+        if (Cache.session.level === Cache.session.finalLevel) {
             $("#congrats").show();
-            SnakeView.gameOver();
+            View.gameOver();
         } else {
-            SnakeCache.session.level += 1;
+            Cache.session.level += 1;
         
-            SnakeEngine.isOn = false;
-            SnakeView.buildLevel();
-            SnakeHelpers.clearLevel(true); // Clear the prior level but keep the HTML so it can slide out of view.
-            SnakeHelpers.prepareLevel(SnakeCache.session.segments, SnakeCache.session.humansPresent);
+            Engine.isOn = false;
+            View.buildLevel();
+            Helpers.clearLevel(true); // Clear the prior level but keep the HTML so it can slide out of view.
+            Helpers.prepareLevel(Cache.session.segments, Cache.session.humansPresent);
             
             $("#levelContainer_" + priorLevel).animate({
-                "margin-left" : "-=" + SnakeView.gameContWidth + "px"
+                "margin-left" : "-=" + View.gameContWidth + "px"
             }, "slow", function () {
-                SnakeView.removeLevel(priorLevel);
-                SnakeEngine.countdown(3);
+                View.removeLevel(priorLevel);
+                Engine.countdown(3);
             });
         }
     },
     retry: function () {
-        var sessionDifficulty = SnakeCache.session.difficulty,
-            $expiredLevel = $("#levelContainer_" + SnakeCache.session.level);
+        var sessionDifficulty = Cache.session.difficulty,
+            $expiredLevel = $("#levelContainer_" + Cache.session.level);
         
         $expiredLevel.attr("id", "levelContainer_expired");
-        $("#level_" + SnakeCache.session.level).attr("id", "level_expired");
+        $("#level_" + Cache.session.level).attr("id", "level_expired");
 
-        SnakeHelpers.clearLevel(true);
-        SnakeView.resetSession();
-        SnakeCache.session.difficulty = sessionDifficulty; // Reassign the difficulty because resetSession() resets it.
+        Helpers.clearLevel(true);
+        View.resetSession();
+        Cache.session.difficulty = sessionDifficulty; // Reassign the difficulty because resetSession() resets it.
         
-        SnakeView.initSession();
+        View.initSession();
         
         $expiredLevel.animate({
-            "margin-left" : "-=" + SnakeView.gameContWidth + "px"
+            "margin-left" : "-=" + View.gameContWidth + "px"
         }, "slow", function () {
             $("#gameOver").appendTo("#gameViewUtils").hide();
-            SnakeView.removeLevel("expired");
-            SnakeEngine.countdown(3);
+            View.removeLevel("expired");
+            Engine.countdown(3);
         });
     },
     prepareLevel: function (segsToCreate, startingHumanCount) {
@@ -142,10 +142,10 @@ var SnakeHelpers = {
         
         Snake.grow(1); // Create the snake's head.
         
-        if (SnakeCache.session.difficulty === "challenge") {
-            walls = SnakeCache.session.level * SnakeCache.literals.wallMultiplier;
+        if (Cache.session.difficulty === "challenge") {
+            walls = Cache.session.level * Cache.literals.wallMultiplier;
             Snake.segsToCreate = segsToCreate;
-        } else if (SnakeCache.session.difficulty === "custom") {
+        } else if (Cache.session.difficulty === "custom") {
             walls = $("#wallsSlider").slider("value");
             if (walls === 0) {
                 $("#snakeHUD .challengeInfo").hide();
@@ -166,30 +166,30 @@ var SnakeHelpers = {
         }
     },
     clearLevel: function (keepHtml) {
-        SnakeEngine.isOn = false;
+        Engine.isOn = false;
         
         while (Snake.segments[0]) {
             Snake.segments[0].destroy(keepHtml);
         }
-        while (SnakeCache.pickUps[0]) {
-            SnakeCache.pickUps[0].destroy(keepHtml);
+        while (Cache.pickUps[0]) {
+            Cache.pickUps[0].destroy(keepHtml);
         }
-        while (SnakeCache.walls[0]) {
-            SnakeCache.walls[0].destroy(keepHtml);
+        while (Cache.walls[0]) {
+            Cache.walls[0].destroy(keepHtml);
         }
         
         // Disable the active power-up.
-        if (SnakeCache.session.activePowerUp) {
-            SnakeCache.session.activePowerUp.togglePowerUp();
+        if (Cache.session.activePowerUp) {
+            Cache.session.activePowerUp.togglePowerUp();
         }
     },
     enterPortal: function () { // Leads the player to the next level.
         if (Snake.segments.length === 0) {
-            SnakeCache.enteringPortal = false;
-            SnakeHelpers.nextLevel();
+            Cache.enteringPortal = false;
+            Helpers.nextLevel();
         } else {
             Snake.segments[Snake.segments.length - 1].destroy();
-            SnakeView.updateScore(10);
+            View.updateScore(10);
         }
     }
 };

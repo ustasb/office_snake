@@ -2,34 +2,34 @@ $(document.body).keydown(function (event) {
     var key = event.keyCode;
     
     // Prevents the player from immediately reversing directions via cycling directions.
-    if (SnakeEngine.waitingForInput && Snake.head) {
+    if (Engine.waitingForInput && Snake.head) {
         switch (key) {
         case 87: // w
         case 38: // Up Arrow
             if (Snake.head.direction !== "s") {
                 Snake.head.direction = "n";
-                SnakeEngine.waitingForInput = false;
+                Engine.waitingForInput = false;
             }
             break;
         case 68: // d
         case 39: // Right Arrow
             if (Snake.head.direction !== "w") {
                 Snake.head.direction = "e";
-                SnakeEngine.waitingForInput = false;
+                Engine.waitingForInput = false;
             }
             break;
         case 83: // s
         case 40: // Down Arrow
             if (Snake.head.direction !== "n") {
                 Snake.head.direction = "s";
-                SnakeEngine.waitingForInput = false;
+                Engine.waitingForInput = false;
             }
             break;
         case 65: // a
         case 37: // Left Arrow
             if (Snake.head.direction !== "e") {
                 Snake.head.direction = "w";
-                SnakeEngine.waitingForInput = false;
+                Engine.waitingForInput = false;
             }
             break;
         }
@@ -37,12 +37,12 @@ $(document.body).keydown(function (event) {
     
     // Pause if 'Esc', 'Space' or 'p' are pressed.
     if (key === 27 || key === 32 || key === 80) {
-        SnakeEngine.pause();
+        Engine.pause();
     }
 });
 
 $(window).resize(function () {
-    SnakeView.updateGameContainer(SnakeView.gameContWidth, SnakeView.gameContHeight);
+    View.updateGameContainer(View.gameContWidth, View.gameContHeight);
 });
 
 $(".back").click(function () {
@@ -52,19 +52,19 @@ $(".back").click(function () {
         $("#loading").remove();
     }
 
-    SnakeView.animateMenu("homePos");
-    SnakeCache.session.difficulty = undefined;
+    View.animateMenu("homePos");
+    Cache.session.difficulty = undefined;
 });
 
 $("#mainMenu span").click(function () {
     var action = $(this).text().toLowerCase();
     
     if (action === "high scores") {
-        SnakeView.animateMenu("highScoresPos", function () {
-            SnakeView.loadHighScores(SnakeView.highScoresView);
+        View.animateMenu("highScoresPos", function () {
+            View.loadHighScores(View.highScoresView);
         });
     } else {
-        SnakeView.selectDifficulty(action);
+        View.selectDifficulty(action);
     }
     
     if (action === "high scores" || action === "custom") {
@@ -75,33 +75,33 @@ $("#mainMenu span").click(function () {
 $("#highScoresView span").click(function () {
     var difficulty = $(this).text().toLowerCase();
     if (difficulty !== " | ") {
-        SnakeView.highScoresView = difficulty;
-        SnakeView.loadHighScores(SnakeView.highScoresView);
+        View.highScoresView = difficulty;
+        View.loadHighScores(View.highScoresView);
     }
 });
 
 $("#ready").click(function () {
-    if (SnakeCache.session.difficulty === "custom") {
+    if (Cache.session.difficulty === "custom") {
         $(".ui-resizable-handle").hide();
     }
     
-    SnakeView.initSession();
+    View.initSession();
     
-    SnakeView.animateMenu("mapsPos", function () {
-        SnakeEngine.countdown(3);
+    View.animateMenu("mapsPos", function () {
+        Engine.countdown(3);
     });
 });
 
-$("#retry").click(SnakeHelpers.retry);
+$("#retry").click(Helpers.retry);
 
-$("#resume").click(SnakeEngine.resume);
+$("#resume").click(Engine.resume);
 
 $(".goToMenu").click(function () {
-    SnakeView.animateMenu("homePos", function () {
+    View.animateMenu("homePos", function () {
         $("#gameOver").appendTo("#gameViewUtils").hide();
-        SnakeHelpers.clearLevel();
-        SnakeView.removeLevel(SnakeCache.session.level);
-        SnakeView.resetSession();
+        Helpers.clearLevel();
+        View.removeLevel(Cache.session.level);
+        View.resetSession();
     });
 });
 
@@ -110,23 +110,23 @@ $("#gameContainer").resizable({
     minWidth: 500,
     minHeight: 500,
     resize: function (event, ui) {
-        SnakeView.updateGameContainer(ui.size.width, ui.size.height);
-        SnakeView.updateViewDependencies(ui.size.width, ui.size.height);
+        View.updateGameContainer(ui.size.width, ui.size.height);
+        View.updateViewDependencies(ui.size.width, ui.size.height);
     },
     stop: function (event, ui) {
-        SnakeView.alignGameWinToGrid(SnakeCache.literals.tileWidth, SnakeCache.literals.tileHeight);
+        View.alignGameWinToGrid(Cache.literals.tileWidth, Cache.literals.tileHeight);
         
-        SnakeHelpers.readjustWallSlider();
+        Helpers.readjustWallSlider();
         
         // Deal with the number of high scores on display.
-        if (SnakeView.slidingMenuTab === "highScoresPos") {
+        if (View.slidingMenuTab === "highScoresPos") {
             if (ui.originalSize.height < ui.size.height) {
-                SnakeView.loadHighScores(SnakeView.highScoresView);
+                View.loadHighScores(View.highScoresView);
             } else {
                 var numOfScores, scoreRows, scoresToDelete;
                 
                 numOfScores = $(".highscore").length;
-                scoreRows = (ui.size.height - (4 * SnakeCache.literals.tileHeight)) / SnakeCache.literals.tileHeight;
+                scoreRows = (ui.size.height - (4 * Cache.literals.tileHeight)) / Cache.literals.tileHeight;
                 scoresToDelete = numOfScores - scoreRows;
                 
                 for (var i = 0; i < scoresToDelete; i++) {
@@ -157,7 +157,7 @@ $("#submit").live("click", function () {
         };
 
         if (HighScores) {
-            HighScores.put(name, SnakeCache.session.difficulty, SnakeEngine.time, SnakeCache.session.score, handleSuccess)
+            HighScores.put(name, Cache.session.difficulty, Engine.time, Cache.session.score, handleSuccess)
         }
 
     } else {

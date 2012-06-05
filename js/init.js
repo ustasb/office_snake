@@ -1,4 +1,4 @@
-SnakeView.initialize(800, 540);
+View.initialize(800, 540);
 
 // Build and prepare the custom attribute sliders.
 $(".slider").each(function () {
@@ -25,7 +25,7 @@ $(".slider").each(function () {
         defaultValue = 20;
         break;
     case "walls":
-        max = SnakeHelpers.getMaxWalls();
+        max = Helpers.getMaxWalls();
         defaultValue = Math.floor(max * 0.5);
         break;
     case "bombs":

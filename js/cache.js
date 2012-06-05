@@ -1,4 +1,4 @@
-var SnakeCache = {
+var Cache = {
     tiles: [[]],
     tilesYLimit: 0,
     tilesXLimit: 0,
@@ -26,18 +26,18 @@ var SnakeCache = {
         humanCount: 0
     },
     resetCache: function () {
-        SnakeCache.tiles = [[]];
-        SnakeCache.pickUps = [];
-        SnakeCache.walls = [];
+        Cache.tiles = [[]];
+        Cache.pickUps = [];
+        Cache.walls = [];
         
-        for (var param in SnakeCache.session) {
-            if (SnakeCache.session.hasOwnProperty(param)) {
-                SnakeCache.session[param] = 0;
+        for (var param in Cache.session) {
+            if (Cache.session.hasOwnProperty(param)) {
+                Cache.session[param] = 0;
             }
         }
         
-        SnakeCache.session.difficulty = undefined;
-        SnakeCache.session.level = 1;
+        Cache.session.difficulty = undefined;
+        Cache.session.level = 1;
         Snake.segsToKill[0] = 0;
     }
 };
