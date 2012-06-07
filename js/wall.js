@@ -38,7 +38,8 @@ Wall.generateWallPattern = function (wallsToCreate) {
             do {
                 if (freeDirections.length === 0) {
                     bannedPosns.push(parentWall.tilePos);
-                    parentWall = Cache.walls[Math.floor(Math.random() * Cache.walls.length)];
+                    parentWall = Cache.walls[Math.floor(Math.random() *
+                                                        Cache.walls.length)];
                     if (validPos(parentWall.tilePos, bannedPosns)) {
                         freeDirections = allDirections.slice(0);
                     } else {
@@ -46,7 +47,8 @@ Wall.generateWallPattern = function (wallsToCreate) {
                     }
                 }
                 
-                currDirection = freeDirections[Math.floor(Math.random() * freeDirections.length)];
+                currDirection = freeDirections[Math.floor(Math.random() *
+                                                          freeDirections.length)];
                                 
                 newTilePos = parentWall.tilePos.slice(0);
                 switch (currDirection) {
@@ -108,7 +110,8 @@ Wall.plantBombs = function (bombsPercent) {
 Wall.updateBombHints = function () {
     for (var i = 0, j = Cache.walls.length; i < j; i++) {
         var nearbyBombCount = 0,
-            touchingWalls = Helpers.getSurroundingObjs(Cache.walls[i].tilePos, Wall);
+            touchingWalls = Helpers.getSurroundingObjs(Cache.walls[i].tilePos,
+                                                       Wall);
         
         for (var a = 0, b = touchingWalls.length; a < b; a++) {
             if (touchingWalls[a].hasBomb) {
@@ -120,13 +123,16 @@ Wall.updateBombHints = function () {
     }
 };
 
-Wall.updateNeighborWalls = function () { // Update bomb hints and replace island, bomb-occupied walls with a human.
+// Update bomb hints and replace island, bomb-occupied walls with a human.
+Wall.updateNeighborWalls = function () {
     var nearbyBombCount, touchingWalls, wallTilePos,
-        wallsSurroundingHead = Helpers.getSurroundingObjs(Snake.head.tilePos, Wall);
+        wallsSurroundingHead = Helpers.getSurroundingObjs(Snake.head.tilePos, 
+                                                          Wall);
     
     for (var i = 0, j = wallsSurroundingHead.length; i < j; i++) {
         nearbyBombCount = 0;
-        touchingWalls = Helpers.getSurroundingObjs(wallsSurroundingHead[i].tilePos, Wall);
+        touchingWalls = Helpers.getSurroundingObjs(wallsSurroundingHead[i].tilePos,
+                                                   Wall);
         
         if (touchingWalls.length === 0 && wallsSurroundingHead[i].hasBomb) {
             wallTilePos = wallsSurroundingHead[i].tilePos;
@@ -153,8 +159,10 @@ Wall.prototype = {
     explode: function () {
         var $explosion = $("<div class='explosion'></div>");
         $explosion.css({
-            left: Cache.tiles[this.tilePos[0]][this.tilePos[1]].left - Cache.literals.tileWidth,
-            top: Cache.tiles[this.tilePos[0]][this.tilePos[1]].top - Cache.literals.tileHeight    
+            left: Cache.tiles[this.tilePos[0]][this.tilePos[1]].left - 
+                  Cache.literals.tileWidth,
+            top: Cache.tiles[this.tilePos[0]][this.tilePos[1]].top - 
+                 Cache.literals.tileHeight    
         });            
         
         $explosion.appendTo("#level_" + Cache.session.level);
@@ -177,7 +185,8 @@ Wall.prototype = {
             Cache.session.gems -= 1;
             View.updateChallengeInfo(Cache.session.level, Cache.session.gems);
             
-            if (Cache.session.gems === 0 && Cache.session.difficulty === "challenge") {
+            if (Cache.session.gems === 0 && Cache.session.difficulty ===
+               "challenge") {
                 (new PickUp("portal")).create();
             }
         }

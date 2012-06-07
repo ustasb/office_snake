@@ -6,14 +6,17 @@ function PickUp(type) {
         this.type = "human";
         Cache.session.humanCount += 1;
     } else if (type === "powerUp") {
-        var generateType, pUpType, pUpTypes = ["dblPoints", "shrink", "slowTime", "invincible"];
+        var generateType, pUpType,
+            pUpTypes = ["dblPoints", "shrink", "slowTime", "invincible"];
         
         generateType = function () {
             return pUpTypes[Math.floor(Math.random() * pUpTypes.length)];
         };
         
         pUpType = generateType();
-        this.type = (pUpType === "invincible") ? generateType() : pUpType; // Make the invincibility power-up rarer.
+
+        // Make the invincibility power-up rarer.
+        this.type = (pUpType === "invincible") ? generateType() : pUpType;
 
         Cache.session.displayedPowerUp = this;
     } else if (type === "portal") {
@@ -39,7 +42,8 @@ PickUp.toggleSmile = function (triggerObj) {
     }
 };
 
-PickUp.togglePowerUp = function () { // Gets called by Engine.tick() every x seconds.
+// Gets called by Engine.tick() every x seconds.
+PickUp.togglePowerUp = function () {
     if (Cache.session.activePowerUp) {
         Cache.session.activePowerUp.togglePowerUp();
     } else {
@@ -74,7 +78,7 @@ PickUp.prototype = {
         
         if (this.type === "human") {
             Cache.session.humanCount -= 1;
-        } else if (this.type !== "portal" && this.type !== "human") { // Refers to a power-up type.
+        } else if (this.type !== "portal" && this.type !== "human") {
             Cache.session.displayedPowerUp = false;
         }
 
@@ -124,7 +128,9 @@ PickUp.prototype = {
                 if (Snake.segsToKill[0]) {
                     Snake.removeDeadSegments();
                 }
-                if (Snake.segments.length > 3) { // Prevents the power-up from killing the snake.
+
+                // Prevents the power-up from killing the snake.
+                if (Snake.segments.length > 3) {
                     Snake.killSegments(3);
                 }
             }
@@ -138,7 +144,8 @@ PickUp.prototype = {
             }
             break;
         case "invincible":
-            var speed = (Cache.session.difficulty === "challenge") ? 0.5 : 0.65;
+            var speed = (Cache.session.difficulty === "challenge") ? 0.5 :
+                                                                     0.65;
             if (Cache.session.activePowerUp) {
                 Snake.invincible = true;
                 

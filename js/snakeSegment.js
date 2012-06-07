@@ -6,10 +6,16 @@ function SnakeSegment() {
     }
     
     var cssClassName = (this === Snake.head) ? "head" : "snakeSeg";
-    this.$html = $("<div id='" + "seg_" + snakeSegsLength + "' class='" + cssClassName + "'></div>");
+    this.$html = $("<div id='" + "seg_" + snakeSegsLength + "' class='" +
+                   cssClassName + "'></div>");
     
-    this.leaderSegment = (snakeSegsLength !== 1) ? Snake.segments[snakeSegsLength - 2] : undefined;
-    this.direction = (snakeSegsLength !== 1) ? this.leaderSegment.direction : "e";
+    if (snakeSegsLength !== 1) {
+        this.leaderSegment = Snake.segments[snakeSegsLength - 2];
+        this.direction = this.leaderSegment.direction;
+    } else {
+        this.direction = "e";
+    }
+
     this.tilePos = [0, 0]; // y, x
     this.previousTilePos = [0, 0];
 }

@@ -1,6 +1,6 @@
 var View = {
-    // Record what the gameContainer's dimensions should be because the browser
-    // can't be expected to return accurate measurements when zooming.
+    // Record what the gameContainer's dimensions should be because the 
+    // browser can't be expected to return accurate measurements when zooming.
     gameContWidth: 0,
     gameContHeight: 0,
     hsRequestTime: 0,
@@ -14,10 +14,12 @@ var View = {
     },
     initialize: function (width, height) {
         // If JavaScript is enabled, prepare the document.
-        if (navigator.platform.indexOf("iPhone") !== -1 || navigator.platform.indexOf("iPod") !== -1) {
+        if (navigator.platform.indexOf("iPhone") !== -1 ||
+            navigator.platform.indexOf("iPod") !== -1) {
             $("#clientWarning").text("Sorry, this site requires a keyboard.");
         } else if ($.browser && $.browser.msie && $.browser.version <= 6.0) {
-            $("#clientWarning").html("Your browser isn't supported here.<br />Update it!");
+            $("#clientWarning").html("Your browser isn't supported" + 
+                                     "here.<br />Update it!");
         } else {
             $("#clientWarning").remove();
             $("#pauseMenu, #gameOver, .ui-resizable-handle").hide();
@@ -60,7 +62,8 @@ var View = {
             View.hsRequestTime = (new Date()).getTime();
             
             scorePadding = 4 * Cache.literals.tileHeight;
-            scoresToLoad = Math.floor((View.gameContHeight - scorePadding) / Cache.literals.tileHeight);
+            scoresToLoad = Math.floor((View.gameContHeight - scorePadding) /
+                                      Cache.literals.tileHeight);
             
             $("#" + difficulty + "View").css("text-decoration", "underline")
             .siblings().css("text-decoration", "none");
@@ -74,7 +77,9 @@ var View = {
 
                 if (typeof csvResponse === "string") {
                     csvResponse = csvResponse.split("\n");
-                    csvResponse.pop(); // Destroy the last index that's created by the trailing '\n'.
+                    // Destroy the last index that's created by the
+                    // trailing '\n'.
+                    csvResponse.pop();
                 }
                 
                 $(".highscore, #loading").remove();
@@ -87,8 +92,12 @@ var View = {
                     }
                     
                     // This concatenation needs work...
-                    $csvRow = $("<tr class='highscore'><td>" + rank + "</td><td>" + csvResponse[i][0] + "</td>" +
-                        "<td>" + csvResponse[i][1] + "</td><td>" + time + "</td><td>" + csvResponse[i][3] + "</td></tr>");
+                    $csvRow = $("<tr class='highscore'><td>" + rank +
+                                "</td><td>" + csvResponse[i][0] + "</td>" +
+                                "<td>" + csvResponse[i][1] + "</td><td>" +
+                                time + "</td><td>" + csvResponse[i][3] + 
+                                "</td></tr>");
+
                     $("#highScores table").append($csvRow);
                     
                     rank += 1;
@@ -100,7 +109,8 @@ var View = {
             }
         }
     },
-    alignMenuTabs: function (width) { // Sets the 'left' positions of the sliding menu tabs.
+    // Sets the 'left' positions of the sliding menu tabs.
+    alignMenuTabs: function (width) {
         var posLeft, posIncrement = 0;
         
         for (posLeft in View.slidingMenu) {
@@ -177,10 +187,12 @@ var View = {
     },
     updateViewDependencies: function (width, height) {
         if (width) {
-            $("#canvas, #highScores, #home, #help, #maps .levelContainer, #gameViewUtils").width(width);
+            $("#canvas, #highScores, #home, #help, #maps .levelContainer, " + 
+              "#gameViewUtils").width(width);
             
             View.alignMenuTabs(width);
-            $("#slidingMenu").css("left", View.slidingMenu[View.slidingMenuTab] + "px");
+            $("#slidingMenu").css("left",
+                                  View.slidingMenu[View.slidingMenuTab] + "px");
         }
         
         if (height) {
@@ -211,7 +223,8 @@ var View = {
                 $(".challengeInfo").show();
             }
             
-            var topPad = ($(document).height() - Cache.literals.compHeight) / 2;
+            var topPad = ($(document).height() - 
+                          Cache.literals.compHeight) / 2;
             
             $("#gameContainer").animate({
                 width : Cache.literals.compWidth + "px",
@@ -251,10 +264,12 @@ var View = {
         
         Cache.addedPtsTimer = setTimeout(function () {
             if ($.browser && $.browser.msie && $.browser.version < 9.0) {
-                // This is an IE < 9 fix. Firstly, fadeout() is too processor intensive for IE and slows the game down noticeably.
+                // This is an IE < 9 fix. Firstly, fadeout() is too processor 
+                // intensive for IE and slows the game down noticeably.
                 // It is, however, a desirable effect for faster browsers.
-                // Finally, removing the span isn't immediate--the span hangs around like an artifact before disappearing. It perplexes me.
-                // The solution is to replace the span with a non-breaking-space.
+                // Finally, removing the span isn't immediate--the span hangs
+                // around like an artifact before disappearing...
+                // The solution is to replace the span with a &nbsp.
                 $("#pointAddition").html("&nbsp;");
             } else {
                 $("#pointAddition span").fadeOut();
@@ -262,13 +277,16 @@ var View = {
         }, 1000);
     },
     buildLevel: function () {
-        $('<div id="levelContainer_' + Cache.session.level + '" class="levelContainer"></div>')
+        $('<div id="levelContainer_' + Cache.session.level +
+          '" class="levelContainer"></div>')
         .width(View.gameContWidth)
-        .append('<div id="level_' + Cache.session.level + '" class="level"><div id="countdown"><div>3</div></div></div>')
+        .append('<div id="level_' + Cache.session.level +
+                '" class="level"><div id="countdown"><div>3</div></div></div>')
         .appendTo("#mapsIE7Fix");
         
         if (Cache.session.difficulty === "challenge") {
-            $("#countdown").prepend("<div id='currentLevel'>Level " + Cache.session.level + "</div>");
+            $("#countdown").prepend("<div id='currentLevel'>Level " +
+                                    Cache.session.level + "</div>");
         } else {
             View.centerElement($("#countdown div"), $("#countdown"));
         }
@@ -313,7 +331,8 @@ var View = {
             Cache.session.humansPresent = $("#humansPresentSlider").slider("value");
             Engine.powerUpDuration = $("#powerUpDurationSlider").slider("value");
             // Convert the speed to appropriate milliseconds.
-            Snake.speed = ($("#speedSlider").slider("option", "max") - $("#speedSlider").slider("value")) * 10 + 20;
+            Snake.speed = ($("#speedSlider").slider("option", "max") -
+                          $("#speedSlider").slider("value")) * 10 + 20;
             break;
         }
         
@@ -343,14 +362,16 @@ var View = {
         } else {
             if (Cache.session.score >= 100) {
                 $("input[name='name']").val("").removeAttr("disabled");
-                $("#enterName span:last-child").attr("id", "submit").text("Submit");
+                $("#enterName span:last-child").attr("id",
+                                                     "submit").text("Submit");
                 $("#rank, #enterName").show();
             } else {
                 $("#rank, #enterName").hide();
             }
         }
         
-        $("#gameOver").appendTo("#level_" + Cache.session.level).width(View.gameContWidth);
+        $("#gameOver").appendTo("#level_" +
+                                Cache.session.level).width(View.gameContWidth);
         $("#gameOver").show();
         View.centerElement($("#gameOver"));
         $("#enterName input").focus();

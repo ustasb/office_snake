@@ -1,7 +1,8 @@
 $(document.body).keydown(function (event) {
     var key = event.keyCode;
     
-    // Prevents the player from immediately reversing directions via cycling directions.
+    // Prevents the player from immediately reversing directions
+    // via cycling directions.
     if (Engine.waitingForInput && Snake.head) {
         switch (key) {
         case 87: // w
@@ -114,7 +115,8 @@ $("#gameContainer").resizable({
         View.updateViewDependencies(ui.size.width, ui.size.height);
     },
     stop: function (event, ui) {
-        View.alignGameWinToGrid(Cache.literals.tileWidth, Cache.literals.tileHeight);
+        View.alignGameWinToGrid(Cache.literals.tileWidth,
+                                Cache.literals.tileHeight);
         
         Helpers.readjustWallSlider();
         
@@ -126,7 +128,8 @@ $("#gameContainer").resizable({
                 var numOfScores, scoreRows, scoresToDelete;
                 
                 numOfScores = $(".highscore").length;
-                scoreRows = (ui.size.height - (4 * Cache.literals.tileHeight)) / Cache.literals.tileHeight;
+                scoreRows = (ui.size.height - 4 * Cache.literals.tileHeight) /
+                            Cache.literals.tileHeight;
                 scoresToDelete = numOfScores - scoreRows;
                 
                 for (var i = 0; i < scoresToDelete; i++) {
@@ -147,7 +150,8 @@ $("#submit").live("click", function () {
     $("#enterName span:last-child").remove();
     
     // Validate the given name.
-    if (name.search(/\W/) === -1 && nameLength >= minLen && nameLength <= maxLen) {
+    if (name.search(/\W/) === -1 && nameLength >= minLen &&
+        nameLength <= maxLen) {
         $("#enterName").append("<span>Saving...</span>");
 
         handleSuccess = function(rank) {
@@ -157,7 +161,8 @@ $("#submit").live("click", function () {
         };
 
         if (HighScores) {
-            HighScores.put(name, Cache.session.difficulty, Engine.time, Cache.session.score, handleSuccess)
+            HighScores.put(name, Cache.session.difficulty, Engine.time,
+                           Cache.session.score, handleSuccess)
         }
 
     } else {
@@ -166,7 +171,8 @@ $("#submit").live("click", function () {
         if (nameLength < minLen) {
             errorMsg = "Names must be at least " + minLen + " letters.";
         } else if (nameLength > maxLen) {
-            errorMsg = "Names must be less than " + (maxLen + 1) + " letters.";
+            errorMsg = "Names must be less than " + (maxLen + 1) +
+                       " letters.";
         } else {
             errorMsg = "Names can only contain alphanumeric characters.";
         }
@@ -176,7 +182,8 @@ $("#submit").live("click", function () {
         
         setTimeout(function () {
             $error.fadeOut(1500, function () {
-              $("#enterName").append("<span id='submit'>Submit</span>");
+              $("#enterName").append("<span id='submit' " + 
+                                     "class='button'>Submit</span>");
             });
         }, 1000);
     }

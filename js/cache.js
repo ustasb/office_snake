@@ -26,16 +26,18 @@ var Cache = {
         humanCount: 0
     },
     resetCache: function () {
+        var param;
+
         Cache.tiles = [[]];
         Cache.pickUps = [];
         Cache.walls = [];
-        
-        for (var param in Cache.session) {
+
+        for (param in Cache.session) {
             if (Cache.session.hasOwnProperty(param)) {
                 Cache.session[param] = 0;
             }
         }
-        
+
         Cache.session.difficulty = undefined;
         Cache.session.level = 1;
         Snake.segsToKill[0] = 0;

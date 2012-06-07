@@ -24,8 +24,10 @@ var Snake = {
                 segment.follow();
             }
             
-            if (i === j - 1) { // Empty the last segment's previous tile of any objects.
-                Cache.tiles[segment.previousTilePos[0]][segment.previousTilePos[1]].obj = undefined;
+            // Empty the last segment's previous tile of any objects.
+            if (i === j - 1) {
+                var prevTile = segment.previousTilePos;
+                Cache.tiles[prevTile[0]][prevTile[1]].obj = undefined;
             }
         }
         
@@ -45,7 +47,8 @@ var Snake = {
                 if (!Snake.collide(hitObj)) {
                     return false;
                 }
-            } else if (hitObj instanceof SnakeSegment && !Snake.invincible && !hitObj.$html.hasClass("deadSnakeSeg")) {
+            } else if (hitObj instanceof SnakeSegment && !Snake.invincible &&
+                       !hitObj.$html.hasClass("deadSnakeSeg")) {
                 return false;
             }
         }
@@ -66,8 +69,10 @@ var Snake = {
             
             // Create the illusion that the snake has entered the portal.
             Snake.head.$html.css("backgroundColor", "#afafaf");
-            if (Cache.session.activePowerUp && Cache.session.activePowerUp.type !== "shrink") {
-                $(".head").removeClass("pickUp " + Cache.session.activePowerUp.type);
+            if (Cache.session.activePowerUp &&
+                Cache.session.activePowerUp.type !== "shrink") {
+                $(".head").removeClass("pickUp " +
+                                       Cache.session.activePowerUp.type);
             }
             
             Cache.enteringPortal = true;
@@ -97,11 +102,13 @@ var Snake = {
         
         return true; // The snake is still alive.
     },
-    killSegments: function (segsToKill, time, preserveExisting) { // Highlights the dead segments red.
+    // Highlights the dead segments red.
+    killSegments: function (segsToKill, time, preserveExisting) {
         var tempSeg;
         
         if (!preserveExisting && Snake.segsToKill[0] > 0) {
-            Snake.removeDeadSegments(); // Remove any segments already waiting for removal.
+            // Remove any segments already waiting for removal.
+            Snake.removeDeadSegments();
         }
         
         Snake.segsToKill[0] = segsToKill;

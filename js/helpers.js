@@ -49,8 +49,8 @@ var Helpers = {
     },
     getSurroundingObjs: function (tilePos, classFilter) {
         var surroundingObjs = [],
-            y = tilePos[0] - 1, // The top-left position where the search starts.
-            x = tilePos[1] - 1, // ^^
+            y = tilePos[0] - 1, // The top-left position where the search
+            x = tilePos[1] - 1  // starts.
             maxY = y + 3,
             maxX = x + 3;
         
@@ -78,7 +78,7 @@ var Helpers = {
     getMaxWalls: function () {
         // -40 to account for the HUD and first, neutral row.
         var maxWalls = (View.gameContWidth * (View.gameContHeight - 40)) /
-                (Cache.literals.tileWidth * Cache.literals.tileHeight);
+                       (Cache.literals.tileWidth * Cache.literals.tileHeight);
         maxWalls *= 0.40;
         maxWalls -= (maxWalls % 10);
         
@@ -105,8 +105,12 @@ var Helpers = {
         
             Engine.isOn = false;
             View.buildLevel();
-            Helpers.clearLevel(true); // Clear the prior level but keep the HTML so it can slide out of view.
-            Helpers.prepareLevel(Cache.session.segments, Cache.session.humansPresent);
+
+            // Clear the prior level but keep the HTML so it
+            // can slide out of view. 
+            Helpers.clearLevel(true); 
+            Helpers.prepareLevel(Cache.session.segments,
+                                 Cache.session.humansPresent);
             
             $("#levelContainer_" + priorLevel).animate({
                 "margin-left" : "-=" + View.gameContWidth + "px"
@@ -125,7 +129,9 @@ var Helpers = {
 
         Helpers.clearLevel(true);
         View.resetSession();
-        Cache.session.difficulty = sessionDifficulty; // Reassign the difficulty because resetSession() resets it.
+
+        // Reassign the difficulty because resetSession() resets it.
+        Cache.session.difficulty = sessionDifficulty;
         
         View.initSession();
         

@@ -18,32 +18,34 @@ var Engine = {
             Helpers.enterPortal();
         } else {
             Engine.waitingForInput = true;
-            
+
             // If animate() returns true, the snake is still alive.
             if (Snake.animate()) {
-                
+ 
                 if (Snake.segsToCreate !== 0) {
                     (new SnakeSegment()).create();
                     Snake.segsToCreate -= 1;
                     
                     if (Snake.segsToKill[0]) {
-                        // If dead segments are pending for removal and the snake grows, reapply the 'deadSnakeSeg' class.
+                        // If dead segments are pending for removal and the
+                        // snake grows, reapply the 'deadSnakeSeg' class.
                         $(".deadSnakeSeg").removeClass("deadSnakeSeg");
-                        Snake.killSegments(Snake.segsToKill[0], Snake.segsToKill[1], true);
+                        Snake.killSegments(Snake.segsToKill[0],
+                                           Snake.segsToKill[1], true);
                     }
                 }
-                
-                if (Snake.segsToKill[0] > 0 && Snake.segsToKill[1] <= Engine.time) {
+ 
+                if (Snake.segsToKill[0] > 0 &&
+                    Snake.segsToKill[1] <= Engine.time) {
                     Snake.removeDeadSegments(); // Remove the dead segments.
                 }
                 
             } else {
                 Engine.isOn = false;
-                                        
                 setTimeout(View.gameOver, 500);
             }
         }
-        
+
         setTimeout(Engine.gameLoop, Snake.speed);
     },
     countdown: function (seconds) {
@@ -62,7 +64,8 @@ var Engine = {
         if (Engine.isOn) {
             Engine.time += 1;
             
-            if (Engine.time >= (Engine.powerUpToggleTime + Engine.powerUpDuration)) {
+            if (Engine.time >= Engine.powerUpToggleTime +
+                               Engine.powerUpDuration) {
                 PickUp.togglePowerUp();
             }
             
@@ -89,7 +92,8 @@ var Engine = {
         
         // The time remaining on the power-up before the pause.
         if (document.getElementById("powerUpTimeBar")) {
-            var powerUpTimeRemain = (Engine.powerUpToggleTime + Engine.powerUpDuration) - Engine.time;
+            var powerUpTimeRemain = Engine.powerUpToggleTime +
+                                    Engine.powerUpDuration - Engine.time;
             View.powerUpTimeBar(powerUpTimeRemain);
         }
         
