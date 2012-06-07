@@ -24,7 +24,6 @@ h1 { font-size:2.9em; font-weight:400; }
 
 .centerBox { padding-bottom:5px; }
 #highScores .back { float:right; }
-a:hover, .button:hover { text-decoration:none; }
 #highScores, #home, #help, #maps, #maps .levelContainer { float:left; height:100%; }
 .back, #highScoresView span { margin:1px 5px; }
 #help .back, #highScoresView { float:left; }
@@ -71,6 +70,7 @@ table td:first-child + td, table th:first-child + th { width:150px; }
 #enterName input { height:20px; width:150px; }
 #enterName #error { color:maroon; }
 
+a:hover, .button:hover { text-decoration:none; }
 .button { cursor:pointer; text-decoration:underline; }
 #countdown { font-size:2em; height:90px; }
 #countdown #currentLevel { margin-top:5px; }
