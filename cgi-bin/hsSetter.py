@@ -20,7 +20,7 @@ print('\r')
 
 # secretKey is out of reach from the client.
 # This implementation allows me to not worry who sees this file.
-secretKey = open('../secretKey').readline().strip()
+secretKey = open('../secretKey', 'r').readline().strip()
 validHash = '{0}{1}'.format(pScore, hashlib.sha1('{0}{1}'.format(pScore,
                                     secretKey).encode('utf-8')).hexdigest())
 
@@ -57,11 +57,12 @@ with hsFile, open('cgi-bin/tmp.txt', 'w') as outFile:
                 print(rank)
                 makeEntry(newEntry, line)
             elif pScore == score:
-                print(rank)
                 time = int(re.match(r'\w*,\d*,(\d*),', line).group(1))
                 if pTime < time:
+                    print(rank)
                     makeEntry(newEntry, line)
                 else:
+                    print(rank + 1)
                     makeEntry(line, newEntry)
             else:
                 outFile.write(line)
