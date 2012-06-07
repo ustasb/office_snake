@@ -20,13 +20,14 @@ print('\r')
 
 # secretKey is out of reach from the client.
 # This implementation allows me to not worry who sees this file.
-secretKey = open('../secretKey', 'r').readline().strip()
-validHash = '{0}{1}'.format(pScore, hashlib.sha1('{0}{1}'.format(pScore,
-                                    secretKey).encode('utf-8')).hexdigest())
+with open('../secretKey', 'r') as keyFile:
+    secretKey = keyFile.readline().strip()
+    digest = hashlib.sha1((str(pScore) +
+                          secretKey).encode('utf-8')).hexdigest()
 
-if pHash != validHash:
-    print('Invalid score.')
-    raise SystemExit(0)
+    if pHash != '{0}{1}'.format(pScore, digest):
+        print('Invalid score.')
+        raise SystemExit(0)
 
 rank = 1
 madeEntry = False
