@@ -2,7 +2,7 @@ html, body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, input, tex
 div, span, p, a, tr, th, td {font-family:'Lato', Arial, sans-serif; color:#afafaf; line-height:20px;}
 
 html {position:relative; height:100%; background-color:#111111; background-image:url(../images/tiles.png);}
-a {outline:none;}
+a:focus {outline:none;}
 a:hover {text-decoration:none;}
 ul {list-style-type:square;}
 input {border:2px solid black; background-color:#afafaf; color:#111111; font-size:1em; padding-left:2px; margin-top:2px;}
@@ -83,7 +83,7 @@ table td:first-child + td, table th:first-child + th {width:150px;}
 #countdown #currentLevel {margin-top:5px;}
 #countdown div {height:40px; line-height:40px; color:#111111;}
 
-p.clear {clear:both;}
+.clear {clear:both;}
 
 /* Game Items */
 .snakeSeg, .wall, .head, .pickUp, .explosion {position:absolute; margin:1px 0 0 1px; z-index:1;}
