@@ -2,4 +2,5 @@
 *.swp
 *.csv
 *DS_Store
+prod/*
 jquery*.js

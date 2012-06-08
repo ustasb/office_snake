@@ -4,7 +4,15 @@ import os
 import re
 import shutil
 
-class indexHTML():
+UTILS_FOLDER = '/Users/bjustas/Desktop/officeSnake/utils'
+
+def prepareDirPath(dirPath):
+    if re.search(r'/$', dirPath) is None:
+        dirPath += '/'
+
+    return dirPath
+
+class HTMLFile():
     def __init__(self, filePath):
         self.filePath = filePath
         self.html = open(filePath, 'r').read()
@@ -14,75 +22,123 @@ class indexHTML():
         file.write(self.html)
         file.close()
     
-    def compress(self):
-        currentLocation = os.getcwd()
-        os.chdir(prodLocation)
-        os.system('java -jar ../htmlcompressor-1.5.3.jar {0} -o '
-                  'index.html --charset utf-8'.format(self.filePath)) 
-        os.chdir(currentLocation)
-
     def delCSSDecl(self, fileName):
-        self.html = re.sub(r'\s*<link.*{0}.*/>'.format(fileName), '', self.html)
+        self.html = re.sub(r'\s*<link.*{0}.*/>'.format(fileName), '',
+                           self.html)
 
     def makeCSSDecl(self, filePath):
-        cssEntry = '<link type="text/css" rel="stylesheet" href="{0}" />'.format(filePath)
-        self.html = re.sub('</head>', '{0}\n\0'.format(cssEntry), self.html)
+        cssEntry = ('<link type="text/css" rel="stylesheet" '
+                   'href="{0}" />').format(filePath)
+        regex = re.compile(r'^(\s*)(</head>)', re.M) 
+        self.html = re.sub(regex, r'\1\1{0}\n\1\2'.format(cssEntry), self.html)
 
     def delJSDecl(self, fileName):
-        self.html = re.sub(r'\s*<script.*{0}.*</script>'.format(fileName), '', self.html)
+        self.html = re.sub(r'\s*<script.*{0}.*</script>'.format(fileName), '', 
+                           self.html)
 
     def makeJSDecl(self, filePath):
         jsEntry = '<script src="{0}"></script>'.format(filePath)
-        self.html = re.sub(r'</body>', '{0}\n\0'.format(jsEntry), self.html)
+        regex = re.compile(r'^(\s*)(</body>)', re.M)
+        self.html = re.sub(regex, r'\1\1{0}\n\1\2'.format(jsEntry), self.html)
 
-def compressDir(relPath, newFileName, fileType='js', prependStr='', appendStr=''):
-    
-    minFilePath = '{0}{1}'.format(relPath, newFileName) 
-    os.chdir(relPath)
+    def cleanUp(self, dirPath):
+        dirPath = prepareDirPath(dirPath)
 
-    with open('buildOrder', 'r') as buildOrder, open(newFileName, 'w+') as outFile:
+        try:
+            buildOrder = open(dirPath + 'buildOrder', 'r')
+        except IOError:
+            print('Expected to find a buildOrder file but didn\'t.')
+            raise
+        
+        with buildOrder:
+            for fileName in buildOrder:
+                fileName = fileName.strip()
+
+                try:
+                    fileType = re.search(r'(css|js)$', fileName).group(0)
+                except AttributeError:
+                    print('cleanUp() only accepts .css or .js files.')
+                    raise
+
+                if fileType == 'css':
+                    self.delCSSDecl(fileName)
+                else:
+                    self.delJSDecl(fileName)
+        
+
+def mergeDir(dirPath, resultFileName, prependStr='', appendStr=''):
+    oldPath = os.getcwd()
+    dirPath = prepareDirPath(dirPath)
+    os.chdir(dirPath)
+
+    try:
+        buildOrder = open('buildOrder', 'r')
+    except IOError:
+        print('Expected to find a buildOrder file but didn\'t.')
+        raise
+
+    with buildOrder, open(resultFileName, 'w') as outFile:
         
         outFile.write(prependStr)
 
         for fileName in buildOrder:
             fileName = fileName.strip()
             outFile.write(open(fileName, 'r').read())
-            os.remove(fileName)
             
-            if fileType == 'js':
-                index.delJSDecl(fileName)
-            else:
-                index.delCSSDecl(fileName)
-
         outFile.write(appendStr)
 
-        os.remove('buildOrder')
+    # Restore user's path
+    os.chdir(oldPath)
 
-    os.chdir(prodLocation)
-    os.system('java -jar ../yuicompressor-2.4.7.jar --type {0} {1} -o '
-              '{1} --charset utf-8'.format(fileType, minFilePath))
+def compress(filePath, outFile):
+    try:
+        fileType = re.search(r'(html|css|js)$', filePath).group(0)
+    except AttributeError:
+        print('compress() only accepts .html, .css, or .js files.')
+        raise
 
-    if fileType == 'js':
-        index.makeJSDecl(minFilePath)
+    cmd = 'java -jar {0}/{1} --type {2} {3} -o {4} --charset utf-8'
+
+    if fileType == 'html':
+        script = 'htmlcompressor-1.5.3.jar'
     else:
-        index.makeCSSDecl(minFilePath)
+        script = 'yuicompressor-2.4.7.jar'
+    
+    os.system(cmd.format(UTILS_FOLDER, script, fileType, filePath, outFile))
 
-# Create production directory
-if os.path.isdir('prod'):
-    shutil.rmtree('prod')
+if __name__ == '__main__':
 
-shutil.copytree('public', 'prod')
-os.chdir('prod')
+    # Create production directory
+    if os.path.isdir('prod'):
+        shutil.rmtree('prod')
 
-prodLocation = os.getcwd()
-index = indexHTML('index.html')
+    shutil.copytree('public', 'prod')
 
-# Compress JS
-compressDir('js/', 'oSnakeMin.js', 'js', '(function ($, undefined) {', '})(jQuery);')
+    oldPath = os.getcwd()
+    os.chdir('prod')
 
-# Compress CSS
-compressDir('css/', 'oSnakeMin.css', 'css')
+    index = HTMLFile('index.html')
 
-# Commit index.html changes
-index.commit()
-index.compress()
+    # Merge and compress CSS files.
+    mergeDir('css', 'oSnakeMerge.css')
+    compress('css/oSnakeMerge.css', 'css/oSnakeMergeMin.css')
+
+    # Merge and compress JavaScript files.
+    mergeDir('js', 'oSnakeMerge.js', '(function ($, undefined) {', '})(jQuery);')
+    compress('js/oSnakeMerge.js', 'js/oSnakeMergeMin.js')
+
+    # Update the index.html file.
+    index.cleanUp('css')
+    index.cleanUp('js')
+    index.makeCSSDecl('css/oSnakeMergeMin.css')
+    index.makeJSDecl('js/oSnakeMergeMin.js')
+    index.commit()
+    compress(index.filePath, index.filePath)
+
+    # Remove excess development files.
+    for dir in ('css', 'js'):
+        os.system('cd {0};ls .|grep -v oSnakeMergeMin.{0}|xargs rm;'
+                  'cd ..'.format(dir))
+    
+    # Restore the cwd.
+    os.chdir(oldPath)
