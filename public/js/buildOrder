@@ -8,5 +8,5 @@ helpers.js
 engine.js
 events.js
 sha1.js
-highScoresOb.js
+highScores.js
 init.js

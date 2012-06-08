@@ -131,7 +131,7 @@ $("#gameContainer").resizable({
                 scoreRows = (ui.size.height - 4 * Cache.literals.tileHeight) /
                             Cache.literals.tileHeight;
                 scoresToDelete = numOfScores - scoreRows;
-                
+ 
                 for (var i = 0; i < scoresToDelete; i++) {
                     $(".highscore").last().remove();
                 }
