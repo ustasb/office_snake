@@ -6,12 +6,6 @@ import shutil
 
 UTILS_FOLDER = '/Users/bjustas/Desktop/officeSnake/utils'
 
-def prepareDirPath(dirPath):
-    if re.search(r'/$', dirPath) is None:
-        dirPath += '/'
-
-    return dirPath
-
 class HTMLFile():
     def __init__(self, filePath):
         self.filePath = filePath
@@ -65,6 +59,11 @@ class HTMLFile():
                 else:
                     self.delJSDecl(fileName)
         
+def prepareDirPath(dirPath):
+    if re.search(r'/$', dirPath) is None:
+        dirPath += '/'
+
+    return dirPath
 
 def mergeDir(dirPath, resultFileName, prependStr='', appendStr=''):
     oldPath = os.getcwd()
@@ -124,7 +123,8 @@ if __name__ == '__main__':
     compress('css/oSnakeMerge.css', 'css/oSnakeMergeMin.css')
 
     # Merge and compress JavaScript files.
-    mergeDir('js', 'oSnakeMerge.js', '(function ($, undefined) {', '})(jQuery);')
+    mergeDir('js', 'oSnakeMerge.js', '(function ($, undefined) {',
+             '})(jQuery);')
     compress('js/oSnakeMerge.js', 'js/oSnakeMergeMin.js')
 
     # Update the index.html file.
@@ -140,5 +140,5 @@ if __name__ == '__main__':
         os.system('cd {0};ls .|grep -v oSnakeMergeMin.{0}|xargs rm;'
                   'cd ..'.format(dir))
     
-    # Restore the cwd.
+    # Restore the old cwd.
     os.chdir(oldPath)
