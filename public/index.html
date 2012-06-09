@@ -12,7 +12,7 @@
     </head>
     <body>
         <div id="source">
-            <a href="//www.github.com/ustas/officesnake"><!-- current version --></a>
+            <a href="//www.github.com/ustasb/officesnake"><!-- current version --></a>
             <iframe src="//www.facebook.com/plugins/like.php?app_id=171337806280347&amp;href=www.officesnake.com&amp;send=false&amp;layout=button_count&amp;width=73&amp;show_faces=false&amp;action=like&amp;colorscheme=dark&amp;font=arial&amp;height=21" 
                 scrolling="no" 
                 frameborder="0"
@@ -131,6 +131,8 @@
                                     <div id="enterName">
                                         <label for="playerName">Submit a name to the high scores to view ranking.</label><br />
                                         <input id="playerName" type="text" name="name" value=""/><br />
+                                        <span class="error"></span>
+                                        <span class="saving"></span>
                                         <span id="submit" class="button">Submit</span>
                                     </div>
                                     <span id="retry" class="button">Play Again</span><br />
@@ -143,8 +145,12 @@
             </div>
         </div>
         <div id="credit">Made by Brian Ustas</div>
+        <!--
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+        -->
+        <script src="js/jquery/jquery1_7_1_min.js"></script>
+        <script src="js/jquery/jquery-ui-1.8.12.custom.min.js"></script>
         <script src="js/pickup.js"></script>
         <script src="js/wall.js"></script>
         <script src="js/snakeSegment.js"></script>

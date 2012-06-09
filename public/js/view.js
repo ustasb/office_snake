@@ -361,9 +361,8 @@ var View = {
         } else {
             if (Cache.session.score >= 100) {
                 $("input[name='name']").val("").removeAttr("disabled");
-                $("#enterName span:last-child").attr("id",
-                                                     "submit").text("Submit");
-                $("#rank, #enterName").show();
+                $("#enterName .saving").hide();
+                $("#rank, #enterName, #submit").show();
             } else {
                 $("#rank, #enterName").hide();
             }

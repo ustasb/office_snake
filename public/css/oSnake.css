@@ -69,7 +69,7 @@ table td:first-child + td, table th:first-child + th { width:150px; }
 #congrats { color:maroon; display:none; margin-bottom:20px; }
 #enterName { height:80px; margin-top:20px; }
 #enterName input { height:20px; width:150px; }
-#enterName #error { color:maroon; }
+#enterName .error { color:maroon; display:none; }
 
 .button:hover, a:hover { text-decoration:none; }
 .button { cursor:pointer; text-decoration:underline; }

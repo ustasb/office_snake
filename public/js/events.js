@@ -143,22 +143,24 @@ $("#gameContainer").resizable({
 });
 
 $("#submit").live("click", function () {
-    var name, nameLength, handleSuccess, minLen = 3, maxLen = 15;
+    var name, nameLength, handleSuccess, minLen = 3, maxLen = 15,
+        $submit = $("#enterName #submit"); 
     
     name = $("input[name='name']").val();
     nameLength = name.length;
     
-    $("#enterName span:last-child").remove();
-    
+    $submit.hide();
+
     // Validate the given name.
     if (name.search(/\W/) === -1 && nameLength >= minLen &&
         nameLength <= maxLen) {
-        $("#enterName").append("<span>Saving...</span>");
+        var $saving = $("#enterName .saving");
+        $saving.show().text("Saving...");
 
         handleSuccess = function(rank) {
             $("#rank").text("Rank: " + rank);
-            $("#enterName span:last-child").text("Saved.");
             $("#enterName input").attr("disabled", "disabled");
+            $saving.text("Saved.")
         };
 
         if (HighScores) {
@@ -170,21 +172,20 @@ $("#submit").live("click", function () {
         var $error, errorMsg;
 
         if (nameLength < minLen) {
-            errorMsg = "Names must be at least " + minLen + " letters.";
+            errorMsg = "Names must be at least " + minLen + " characters.";
         } else if (nameLength > maxLen) {
             errorMsg = "Names must be less than " + (maxLen + 1) +
-                       " letters.";
+                       " characters.";
         } else {
             errorMsg = "Names can only contain alphanumeric characters.";
         }
         
-        $error = $("<span id='error'>" + errorMsg + "</span>");
-        $("#enterName").append($error);
+        $error = $("#enterName .error");
+        $error.show().text(errorMsg);
         
         setTimeout(function () {
             $error.fadeOut(1500, function () {
-              $("#enterName").append("<span id='submit' " + 
-                                     "class='button'>Submit</span>");
+                $submit.show();
             });
         }, 1000);
     }
