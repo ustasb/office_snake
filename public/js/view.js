@@ -91,7 +91,6 @@ var View = {
                         time += "s";
                     }
                     
-                    // This concatenation needs work...
                     $csvRow = $("<tr class='highscore'><td>" + rank +
                                 "</td><td>" + csvResponse[i][0] + "</td>" +
                                 "<td>" + csvResponse[i][1] + "</td><td>" +
@@ -330,7 +329,7 @@ var View = {
             Snake.segsToCreate = $("#startingLengthSlider").slider("value") - 1;
             Cache.session.humansPresent = $("#humansPresentSlider").slider("value");
             Engine.powerUpDuration = $("#powerUpDurationSlider").slider("value");
-            // Convert the speed to appropriate milliseconds.
+            // Convert the speed to milliseconds.
             Snake.speed = ($("#speedSlider").slider("option", "max") -
                           $("#speedSlider").slider("value")) * 10 + 20;
             break;

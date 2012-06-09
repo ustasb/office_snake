@@ -36,7 +36,7 @@ $(document.body).keydown(function (event) {
         }
     }
     
-    // Pause if 'Esc', 'Space' or 'p' are pressed.
+    // Pause if 'Esc', 'Space' or 'p' is pressed.
     if (key === 27 || key === 32 || key === 80) {
         Engine.pause();
     }
@@ -49,8 +49,9 @@ $(window).resize(function () {
 $(".back").click(function () {
     $(".ui-resizable-handle").hide();
     
-    if (document.getElementById("loading")) {
-        $("#loading").remove();
+    var loadingEl = document.getElementById("loading");  
+    if (loadingEl) {
+        $(loadingEl).remove();
     }
 
     View.animateMenu("homePos");

@@ -16,8 +16,8 @@ var Helpers = {
             }
         }
         
-        // Positions are zero-based thus subtract 1 from the length.
-        Cache.tilesYLimit = Cache.tiles.length - 2;
+        // Positions are zero-based.
+        Cache.tilesYLimit = Cache.tiles.length - 2; // -1 for HUD.
         Cache.tilesXLimit = Cache.tiles[0].length - 1;
     },
     findEmptyTile: function () {

@@ -37,7 +37,7 @@ var Engine = {
  
                 if (Snake.segsToKill[0] > 0 &&
                     Snake.segsToKill[1] <= Engine.time) {
-                    Snake.removeDeadSegments(); // Remove the dead segments.
+                    Snake.removeDeadSegments();
                 }
                 
             } else {
@@ -90,8 +90,8 @@ var Engine = {
     resume: function () {
         $("#pauseMenu").hide();
         
-        // The time remaining on the power-up before the pause.
         if (document.getElementById("powerUpTimeBar")) {
+            // The time remaining on the power-up before the pause.
             var powerUpTimeRemain = Engine.powerUpToggleTime +
                                     Engine.powerUpDuration - Engine.time;
             View.powerUpTimeBar(powerUpTimeRemain);

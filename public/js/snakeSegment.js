@@ -54,7 +54,7 @@ SnakeSegment.prototype = {
 
         Helpers.drawObjToTile(this, false, attr);
 
-        // If humans are in range, make them frown.
+        // If humans are in range, make them frown!
         PickUp.toggleSmile(Snake.head);
     },
     follow: function () {

@@ -42,7 +42,6 @@ PickUp.toggleSmile = function (triggerObj) {
     }
 };
 
-// Gets called by Engine.tick() every x seconds.
 PickUp.togglePowerUp = function () {
     if (Cache.session.activePowerUp) {
         Cache.session.activePowerUp.togglePowerUp();

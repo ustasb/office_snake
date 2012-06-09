@@ -38,7 +38,7 @@ try:
     hsFile = open(hsFileLocation, 'r')
 except IOError:
     # Create the high score file.
-    open (hsFileLocation, 'w')
+    open(hsFileLocation, 'w')
     hsFile = open(hsFileLocation, 'r')
 
 with hsFile, open('cgi-bin/tmp.txt', 'w') as outFile:

@@ -35,8 +35,8 @@ class HTMLFile():
         regex = re.compile(r'^(\s*)(</body>)', re.M)
         self.html = re.sub(regex, r'\1\1{0}\n\1\2'.format(jsEntry), self.html)
 
-    def cleanUp(self, dirPath):
-        dirPath = prepareDirPath(dirPath)
+    def removeDeclarationsInDir(self, dirPath):
+        dirPath = sanitizeDirPath(dirPath)
 
         try:
             buildOrder = open(dirPath + 'buildOrder', 'r')
@@ -51,7 +51,7 @@ class HTMLFile():
                 try:
                     fileType = re.search(r'(css|js)$', fileName).group(0)
                 except AttributeError:
-                    print('cleanUp() only accepts .css or .js files.')
+                    print('removeDeclarationsInDir() only accepts .css or .js files.')
                     raise
 
                 if fileType == 'css':
@@ -59,7 +59,7 @@ class HTMLFile():
                 else:
                     self.delJSDecl(fileName)
         
-def prepareDirPath(dirPath):
+def sanitizeDirPath(dirPath):
     if re.search(r'/$', dirPath) is None:
         dirPath += '/'
 
@@ -67,7 +67,7 @@ def prepareDirPath(dirPath):
 
 def mergeDir(dirPath, resultFileName, prependStr='', appendStr=''):
     oldPath = os.getcwd()
-    dirPath = prepareDirPath(dirPath)
+    dirPath = sanitizeDirPath(dirPath)
     os.chdir(dirPath)
 
     try:
@@ -77,7 +77,6 @@ def mergeDir(dirPath, resultFileName, prependStr='', appendStr=''):
         raise
 
     with buildOrder, open(resultFileName, 'w') as outFile:
-        
         outFile.write(prependStr)
 
         for fileName in buildOrder:
@@ -86,7 +85,7 @@ def mergeDir(dirPath, resultFileName, prependStr='', appendStr=''):
             
         outFile.write(appendStr)
 
-    # Restore user's path
+    # Restore user's path.
     os.chdir(oldPath)
 
 def compress(filePath, outFile):
@@ -107,7 +106,7 @@ def compress(filePath, outFile):
 
 if __name__ == '__main__':
 
-    # Create production directory
+    # Create production directory.
     if os.path.isdir('prod'):
         shutil.rmtree('prod')
 
@@ -115,8 +114,6 @@ if __name__ == '__main__':
 
     oldPath = os.getcwd()
     os.chdir('prod')
-
-    index = HTMLFile('index.html')
 
     # Merge and compress CSS files.
     mergeDir('css', 'oSnakeMerge.css')
@@ -128,8 +125,9 @@ if __name__ == '__main__':
     compress('js/oSnakeMerge.js', 'js/oSnakeMergeMin.js')
 
     # Update the index.html file.
-    index.cleanUp('css')
-    index.cleanUp('js')
+    index = HTMLFile('index.html')
+    index.removeDeclarationsInDir('css')
+    index.removeDeclarationsInDir('js')
     index.makeCSSDecl('css/oSnakeMergeMin.css')
     index.makeJSDecl('js/oSnakeMergeMin.js')
     index.commit()
