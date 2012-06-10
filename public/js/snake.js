@@ -1,5 +1,4 @@
 var Snake = {
-    version: 1.6,
     head: undefined,
     initSegs: 6,
     segsToCreate: 0,

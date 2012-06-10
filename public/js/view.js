@@ -23,8 +23,7 @@ var View = {
         } else {
             $("#clientWarning").remove();
             $("#pauseMenu, #gameOver, .ui-resizable-handle").hide();
-            $("#source a").text("source v" + Snake.version);
-            $("#gameContainer, #source, #credit").show();
+            $("#gameContainer, #fbLike, #credit").show();
             
             // Sanitize arguments
             width = (width > 500) ? width : 500;

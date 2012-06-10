@@ -8,9 +8,9 @@ input { background-color:#afafaf; border:2px solid #000; color:#111; font-size:1
 h1 { font-size:2.9em; font-weight:400; }
 
 #clientWarning { font-size:1.5em; line-height:1.5em; margin-top:25%; text-align:center; }
-#source, #credit { display:none; padding:5px 10px; position:absolute; right:0; }
-#source { font-size:.8em; overflow:hidden; text-align:right; top:0; width:70px; }
-#source iframe { border:none; float:right; height:21px; margin-top:5px; width:73px; }
+#fbLike, #credit { display:none; padding:5px 10px; position:absolute; right:0; z-index:6; }
+#fbLike { font-size:.8em; overflow:hidden; text-align:right; top:0; width:70px; }
+#fbLike iframe { border:none; float:right; height:21px; margin-top:5px; width:73px; }
 #credit { bottom:0; font-size:.6em; }
 #pointAddition { font-size:1.5em; position:absolute; right:-90px; top:0; }
 
