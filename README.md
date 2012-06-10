@@ -1,4 +1,4 @@
 # Office Snake
-## A JavaScript/jQuery Snake + Minesweeper Game
+A JavaScript Snake/Minesweeper Game
 
-Tested Browsers: IE 7+, FireFox v6.0, Opera v11.51, Chrome 13+
+Tested Browsers: IE 7+, FireFox 12, Safari 5.1.7, Opera 11.64, Chrome 19
