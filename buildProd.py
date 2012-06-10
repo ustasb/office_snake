@@ -3,8 +3,10 @@
 import os
 import re
 import shutil
+from time import time
 
 UTILS_FOLDER = '/Users/bjustas/Desktop/officeSnake/utils'
+TIME = int(time())
 
 class HTMLFile():
     def __init__(self, filePath):
@@ -22,7 +24,7 @@ class HTMLFile():
 
     def makeCSSDecl(self, filePath):
         cssEntry = ('<link type="text/css" rel="stylesheet" '
-                   'href="{0}" />').format(filePath)
+                   'href="{0}?{1}" />').format(filePath, TIME)
         regex = re.compile(r'^(\s*)(</head>)', re.M) 
         self.html = re.sub(regex, r'\1\1{0}\n\1\2'.format(cssEntry), self.html)
 
@@ -31,7 +33,14 @@ class HTMLFile():
                            self.html)
 
     def makeJSDecl(self, filePath):
-        jsEntry = '<script src="{0}"></script>'.format(filePath)
+        jsEntry = '<script src="{0}?{1}"></script>'.format(filePath, TIME)
+        regex = re.compile(r'^(\s*)(</body>)', re.M)
+        self.html = re.sub(regex, r'\1\1{0}\n\1\2'.format(jsEntry), self.html)
+
+    def addAnalytics(self, filePath):
+        compress(filePath, filePath)
+        source = open(filePath, 'r').read()
+        jsEntry = '<script>{0}</script>'.format(source)
         regex = re.compile(r'^(\s*)(</body>)', re.M)
         self.html = re.sub(regex, r'\1\1{0}\n\1\2'.format(jsEntry), self.html)
 
@@ -130,6 +139,7 @@ if __name__ == '__main__':
     index.removeDeclarationsInDir('js')
     index.makeCSSDecl('css/oSnakeMergeMin.css')
     index.makeJSDecl('js/oSnakeMergeMin.js')
+    index.addAnalytics('js/googleAnalytics.js')
     index.commit()
     compress(index.filePath, index.filePath)
 
