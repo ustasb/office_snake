@@ -8,5 +8,4 @@ helpers.js
 engine.js
 events.js
 sha1.js
-highScores.js
 init.js

@@ -1,4 +1,6 @@
 var View = {
+    initWidth: 0,
+    initHeight: 0,
     // Record what the gameContainer's dimensions should be because the 
     // browser can't be expected to return accurate measurements when zooming.
     gameContWidth: 0,
@@ -30,6 +32,9 @@ var View = {
             width -= (width % Cache.literals.tileWidth);
             height = (height > 500) ? height : 500;
             height -= (height % Cache.literals.tileHeight);
+
+            View.initWidth = width;
+            View.initHeight = height;
             
             View.updateGameContainer(width, height);
             View.updateViewDependencies(width, height);
@@ -102,9 +107,14 @@ var View = {
                 }
             };
 
-            if (HighScores) {
-                HighScores.get(scoresToLoad, difficulty, handleSuccess)
-            }
+            $.ajax({
+                type: "POST",
+                url: "../cgi-bin/hsGetter.py",
+                data: {
+                    amt: scoresToLoad,
+                    diff: difficulty
+                }
+            }).done(handleSuccess);
         }
     },
     // Sets the 'left' positions of the sliding menu tabs.
@@ -131,17 +141,6 @@ var View = {
         } else {
             return seconds;
         }    
-    },
-    animateMenu: function (menuTab, callback) {
-        View.slidingMenuTab = menuTab;
-        
-        $("#slidingMenu").animate({
-            "left" : View.slidingMenu[menuTab] + "px"
-        }, {
-            duration: "slow",
-            queue: false,
-            complete: callback
-        });
     },
     alignGameWinToGrid: function (tileWidth, tileHeight) {
         var validWidth = View.gameContWidth,
@@ -183,24 +182,32 @@ var View = {
         View.gameContWidth = width;
         View.gameContHeight = height;
     },
-    updateViewDependencies: function (width, height) {
-        if (width) {
-            $("#canvas, #highScores, #home, #help, #maps .levelContainer, " + 
-              "#gameViewUtils").width(width);
+    updateViewDependencies: (function () {
+        var $slidingMenu = $("#slidingMenu"),
+            $centerBoxes = $(".centerBox"),
+            $heightDepend = $("#canvas, #slidingMenu"),
+            $viewDepend = $("#canvas, #highScores, #home, #help, #maps " + 
+                            ".levelContainer, #gameViewUtils");
+
+        return function (width, height) {
+            if (width) {
+                $viewDepend.width(width);
+                
+                View.alignMenuTabs(width);
+                $slidingMenu.css("left",
+                                 View.slidingMenu[View.slidingMenuTab] + "px");
+            }
             
-            View.alignMenuTabs(width);
-            $("#slidingMenu").css("left",
-                                  View.slidingMenu[View.slidingMenuTab] + "px");
-        }
-        
-        if (height) {
-            $("#canvas, #slidingMenu").height(height);
-        }
-        
-        $(".centerBox").each(function () {
-            View.centerElement($(this));
-        });
-    },
+            if (height) {
+                $heightDepend.height(height);
+            }
+            
+            $centerBoxes.each(function () {
+                View.centerElement($(this));
+            });
+        };
+
+    })(),
     selectDifficulty: function (difficulty) {
         Cache.session.difficulty = difficulty;
         $("#selectedDifficulty").text("difficulty: " + difficulty);
@@ -209,8 +216,9 @@ var View = {
             $(".challengeInfo, #instructions, #pickUpCtrlInfo").hide();
             $("#custom, #snakeHUD .challengeInfo").show();
             
-            View.centerElement($("#help .centerBox"));
             Helpers.readjustWallSlider();
+            View.centerElement($("#help .centerBox"));
+            View.resizeMainWindow("helpPos", false, false);
         } else {
             $("#custom").hide();
             $("#instructions, #pickUpCtrlInfo").show();
@@ -221,13 +229,34 @@ var View = {
                 $(".challengeInfo").show();
             }
             
-            var topPad = ($(document).height() - 
-                          Cache.literals.compHeight) / 2;
+            View.resizeMainWindow("helpPos", Cache.literals.compWidth,
+                                  Cache.literals.compHeight);
+        }
+        
+    },
+    resizeMainWindow: (function () {
+
+        var $gameContainer = $("#gameContainer"),
+            animateMenu = function (menuTab, callback) {
+            View.slidingMenuTab = menuTab;
             
-            $("#gameContainer").animate({
-                width : Cache.literals.compWidth + "px",
-                height: Cache.literals.compHeight + "px",
-                top: topPad + "px"
+            $("#slidingMenu").animate({
+                "left" : View.slidingMenu[menuTab] + "px"
+            }, {
+                duration: "slow",
+                queue: false,
+                complete: callback
+            });
+        };
+        
+        return function (menu, width, height, callback) {
+            width = width ? width : View.gameContWidth;
+            height = height ? height : View.gameContHeight;
+
+            $gameContainer.animate({
+                width : width + "px",
+                height: height + "px",
+                top: ($(document).height() - height) / 2 + "px"
             }, {
                 duration: "slow",
                 queue: false,
@@ -242,11 +271,11 @@ var View = {
                 }
             });
             
-            View.alignMenuTabs(Cache.literals.compWidth);
-        }
-        
-        View.animateMenu("helpPos");
-    },
+            View.alignMenuTabs(width);
+            animateMenu(menu, callback)
+        };
+
+    })(),
     updateScore: function (points) {
         points = (Engine.activeDblPoints) ? points * 2 : points;
         Cache.session.score += points;

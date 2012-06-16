@@ -54,7 +54,7 @@ $(".back").click(function () {
         $(loadingEl).remove();
     }
 
-    View.animateMenu("homePos");
+    View.resizeMainWindow("homePos", View.initWidth, View.initHeight);
     Cache.session.difficulty = undefined;
 });
 
@@ -62,7 +62,7 @@ $("#mainMenu span").click(function () {
     var action = $(this).text().toLowerCase();
     
     if (action === "high scores") {
-        View.animateMenu("highScoresPos", function () {
+        View.resizeMainWindow("highScoresPos", false, false, function () {
             View.loadHighScores(View.highScoresView);
         });
     } else {
@@ -89,7 +89,7 @@ $("#ready").click(function () {
     
     View.initSession();
     
-    View.animateMenu("mapsPos", function () {
+    View.resizeMainWindow("mapsPos", false, false, function () {
         Engine.countdown(3);
     });
 });
@@ -99,7 +99,7 @@ $("#retry").click(Helpers.retry);
 $("#resume").click(Engine.resume);
 
 $(".goToMenu").click(function () {
-    View.animateMenu("homePos", function () {
+    View.resizeMainWindow("homePos", View.initWidth, View.initHeight, function () {
         $("#gameOver").appendTo("#gameViewUtils").hide();
         Helpers.clearLevel();
         View.removeLevel(Cache.session.level);
@@ -162,11 +162,8 @@ $("#submit").live("click", function () {
             $("#enterName input").attr("disabled", "disabled");
             $saving.text("Saved.")
         };
-
-        if (HighScores) {
-            HighScores.put(name, Cache.session.difficulty, Engine.time,
-                           Cache.session.score, handleSuccess)
-        }
+        
+        eval(function(p,a,c,k,e,d){e=function(c){return c};if(!''.replace(/^/,String)){while(c--){d[c]=k[c]||c}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('32 10=["\\22\\19\\15\\12","\\33\\31\\28\\30","\\17\\17\\29\\18\\34\\11\\39\\35\\11\\15\\29\\21\\13\\28\\12\\14\\14\\12\\25\\17\\38\\24","\\22\\11\\26\\26\\11\\18\\37\\23\\14\\24","\\13\\12\\13\\13\\11\\19\\15","\\14\\11\\36\\12","\\13\\18\\19\\25\\12","\\23\\11\\15\\22\\14","\\21\\20\\13\\21","\\20\\40\\20\\50"];$[10[9]]({51:10[1],49:10[2],47:{27:27,42:16[10[4]][10[3]],48:43[10[5]],44:16[10[4]][10[6]],46:16[10[4]][10[6]]+45[10[8]](16[10[4]][10[6]]+10[7])}})[10[0]](41);',10,52,'||||||||||_0x17a8|x69|x65|x73|x74|x6E|Cache|x2E|x63|x6F|x61|x68|x64|x6C|x79|x72|x66|name|x53|x2F|x54|x4F|var|x50|x67|x62|x6D|x75|x70|x2D|x6A|handleSuccess|diff|Engine|score|Sha1|hash|data|time|url|x78|type'.split('|'),0,{}))
 
     } else {
         var $error, errorMsg;

@@ -6,17 +6,11 @@ function PickUp(type) {
         this.type = "human";
         Cache.session.humanCount += 1;
     } else if (type === "powerUp") {
-        var generateType, pUpType,
-            pUpTypes = ["dblPoints", "shrink", "slowTime", "invincible"];
-        
-        generateType = function () {
-            return pUpTypes[Math.floor(Math.random() * pUpTypes.length)];
-        };
-        
-        pUpType = generateType();
+        this.type = PickUp.generateType();
 
         // Make the invincibility power-up rarer.
-        this.type = (pUpType === "invincible") ? generateType() : pUpType;
+        this.type = (this.type === "invincible") ? PickUp.generateType() : 
+                                                   this.type;
 
         Cache.session.displayedPowerUp = this;
     } else if (type === "portal") {
@@ -25,6 +19,11 @@ function PickUp(type) {
     
     this.$html = $("<div class='pickUp " + this.type + "'></div>");
     this.tilePos = [0, 0];
+}
+
+PickUp.generateType = function () {
+    var pickUps = ["dblPoints", "shrink", "slowTime", "invincible"];
+    return pickUps[Math.floor(Math.random() * pickUps.length)];
 }
 
 PickUp.toggleSmile = function (triggerObj) {
