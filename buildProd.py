@@ -5,7 +5,7 @@ import re
 import shutil
 from time import time
 
-UTILS_FOLDER = '/Users/bjustas/Desktop/officeSnake/utils'
+UTILS_FOLDER = '{0}/utils'.format(os.getcwd())
 TIME = int(time())
 
 class HTMLFile():
