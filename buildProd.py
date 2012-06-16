@@ -24,7 +24,7 @@ class HTMLFile():
 
     def makeCSSDecl(self, filePath):
         cssEntry = ('<link type="text/css" rel="stylesheet" '
-                   'href="{0}?{1}" />').format(filePath, TIME)
+                   'href="{0}?v={1}" />').format(filePath, TIME)
         regex = re.compile(r'^(\s*)(</head>)', re.M) 
         self.html = re.sub(regex, r'\1\1{0}\n\1\2'.format(cssEntry), self.html)
 
@@ -33,7 +33,7 @@ class HTMLFile():
                            self.html)
 
     def makeJSDecl(self, filePath):
-        jsEntry = '<script src="{0}?{1}"></script>'.format(filePath, TIME)
+        jsEntry = '<script src="{0}?v={1}"></script>'.format(filePath, TIME)
         regex = re.compile(r'^(\s*)(</body>)', re.M)
         self.html = re.sub(regex, r'\1\1{0}\n\1\2'.format(jsEntry), self.html)
 
@@ -129,7 +129,7 @@ if __name__ == '__main__':
     compress('css/oSnakeMerge.css', 'css/oSnakeMergeMin.css')
 
     # Merge and compress JavaScript files.
-    mergeDir('js', 'oSnakeMerge.js', '(function ($, undefined) {',
+    mergeDir('js', 'oSnakeMerge.js', '(function ($, undefined) {"use strict";',
              '})(jQuery);')
     compress('js/oSnakeMerge.js', 'js/oSnakeMergeMin.js')
 
