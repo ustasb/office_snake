@@ -72,7 +72,7 @@ var Engine = {
             var time = View.formatTimeStr(Engine.time);
             $("#clock").text(time);
             
-            clearTimeout(this.timer)
+            clearTimeout(this.timer);
             this.timer = setTimeout(Engine.tick, 1000);
         }
     },

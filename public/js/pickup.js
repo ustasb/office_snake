@@ -24,7 +24,7 @@ function PickUp(type) {
 PickUp.generateType = function () {
     var pickUps = ["dblPoints", "shrink", "slowTime", "invincible"];
     return pickUps[Math.floor(Math.random() * pickUps.length)];
-}
+};
 
 PickUp.toggleSmile = function (triggerObj) {
     for (var i = 0, j = Cache.pickUps.length; i < j; i++) {

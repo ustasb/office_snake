@@ -50,7 +50,7 @@ var Helpers = {
     getSurroundingObjs: function (tilePos, classFilter) {
         var surroundingObjs = [],
             y = tilePos[0] - 1, // The top-left position where the search
-            x = tilePos[1] - 1  // starts.
+            x = tilePos[1] - 1,  // starts.
             maxY = y + 3,
             maxX = x + 3;
         

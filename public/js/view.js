@@ -272,7 +272,7 @@ var View = {
             });
             
             View.alignMenuTabs(width);
-            animateMenu(menu, callback)
+            animateMenu(menu, callback);
         };
 
     })(),
