@@ -1,7 +1,7 @@
 # Office Snake
 **A JavaScript Snake/Minesweeper Game**
 
-*Initial release: 09/15/2010*
+*Initial release: 10/22/2011*
 
 [officesnake.com] (http://www.officesnake.com)
 
