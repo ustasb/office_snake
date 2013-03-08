@@ -7,12 +7,23 @@
         <meta name="keywords" content="snake, snake minesweeper, snake game, free snake, office snake, javascript snake" />
         <link rel="shortcut icon" href="images/favicon.ico" />
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato" />
-        <link type="text/css" rel="stylesheet" href="css/jqueryUI/jquery-ui-1.8.16.custom.css" />
+        <link type="text/css" rel="stylesheet" href="lib/jqueryUI/jquery-ui-1.8.16.custom.css" />
         <link type="text/css" rel="stylesheet" href="css/oSnake.css" />
+        <script>
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-32730080-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
     </head>
     <body>
         <div id="fbLike">
-            <iframe src="//www.facebook.com/plugins/like.php?href=www.officesnake.com&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=dark&amp;font=arial&amp;height=21" scrolling="no" frameborder="0" allowTransparency="true">
+            <iframe src="https://www.facebook.com/plugins/like.php?href=www.officesnake.com&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=dark&amp;font=arial&amp;height=21" scrolling="no" frameborder="0" allowTransparency="true">
             </iframe>
         </div>
         <div id="clientWarning">Enable JavaScript to view this site.</div>
@@ -140,9 +151,10 @@
                 </div>
             </div>
         </div>
-        <div id="credit">made by <a href="//www.github.com/ustasb/officesnake">Brian Ustas</a></div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script src="js/jquery/jquery-ui-1.8.21.custom.min.js"></script>
+        <div id="credit">made by <a href="https://www.github.com/ustasb/office_snake">Brian Ustas</a></div>
+        <script src="lib/jquery-1.7.2.min.js"></script>
+        <script src="lib/jqueryUI/jquery-ui-1.8.21.custom.min.js"></script>
+        <script src="lib/sha1.js"></script>
         <script src="js/pickup.js"></script>
         <script src="js/wall.js"></script>
         <script src="js/snakeSegment.js"></script>
@@ -152,7 +164,6 @@
         <script src="js/helpers.js"></script>
         <script src="js/engine.js"></script>
         <script src="js/events.js"></script>
-        <script src="js/sha1.js"></script>
         <script src="js/init.js"></script>
     </body>
 </html>
