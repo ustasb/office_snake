@@ -19,7 +19,6 @@ print('Content-type: text/plain\r')
 print('\r')
 
 # secretKey is out of reach from the client.
-# This implementation allows me to not worry who sees this file.
 with open('../secretKey', 'r') as keyFile:
     secretKey = keyFile.readline().strip()
     digest = hashlib.sha1((str(pScore) +
