@@ -21,8 +21,7 @@ print('\r')
 # secretKey is out of reach from the client.
 with open('../secretKey', 'r') as keyFile:
     secretKey = keyFile.readline().strip()
-    digest = hashlib.sha1((str(pScore) +
-                          secretKey).encode('utf-8')).hexdigest()
+    digest = hashlib.sha1((str(pScore) + secretKey).encode('utf-8')).hexdigest()
 
     if pHash != '{0}{1}'.format(pScore, digest):
         print('Invalid score.')
