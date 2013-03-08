@@ -49,9 +49,7 @@ with hsFile, open('cgi-bin/tmp.txt', 'w') as outFile:
         outFile.write(line2)
 
     for line in hsFile:
-
         if madeEntry is False:
-
             score = int(re.match(r'\w*,(\d*),', line).group(1))
             if pScore > score:
                 print(rank)
