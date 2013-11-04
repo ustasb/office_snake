@@ -1,6 +1,4 @@
 $(function () {
-    View.initialize(800, 540);
-
     // Build and prepare the custom attribute sliders.
     $(".slider").each(function () {
         var min, max, defaultValue, type = $(this).prev().attr("id");
@@ -132,9 +130,7 @@ $(function () {
     });
 
     $("#ready").click(function () {
-        if (Cache.session.difficulty === "custom") {
-            $(".ui-resizable-handle").hide();
-        }
+        $(".ui-resizable-handle").hide();
 
         View.initSession();
 
@@ -236,4 +232,6 @@ $(function () {
             }, 1000);
         }
     });
+
+    View.initialize(800, 540);
 });
