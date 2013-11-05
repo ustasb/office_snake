@@ -2,4 +2,4 @@
 *.swp
 *.csv
 *DS_Store
-secretKey
+node_modules/
