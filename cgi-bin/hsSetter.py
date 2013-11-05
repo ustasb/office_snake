@@ -1,31 +1,20 @@
-#!/usr/local/bin/python3
+#!/usr/bin/env python3
 
 import cgi
 import os
 import time
 import re
-import hashlib
 
 request = cgi.FieldStorage()
 pName = request.getvalue('name')
 pDifficulty = request.getvalue('diff')
 pScore = int(request.getvalue('score'))
 pTime = int(request.getvalue('time'))
-pHash = request.getvalue('hash')
-date = time.strftime('%m/%d/%y') 
+date = time.strftime('%m/%d/%y')
 
 # Print header
 print('Content-type: text/plain\r')
 print('\r')
-
-# secretKey is out of reach from the client.
-with open('../secretKey', 'r') as keyFile:
-    secretKey = keyFile.readline().strip()
-    digest = hashlib.sha1((str(pScore) + secretKey).encode('utf-8')).hexdigest()
-
-    if pHash != '{0}{1}'.format(pScore, digest):
-        print('Invalid score.')
-        raise SystemExit(0)
 
 rank = 1
 madeEntry = False
@@ -63,7 +52,7 @@ with hsFile, open('cgi-bin/tmp.txt', 'w') as outFile:
                     makeEntry(line, newEntry)
             else:
                 outFile.write(line)
-            
+
             rank += 1
         else:
             outFile.write(line)
@@ -72,4 +61,4 @@ with hsFile, open('cgi-bin/tmp.txt', 'w') as outFile:
         print(rank)
         outFile.write(newEntry)
 
-os.rename('cgi-bin/tmp.txt', hsFileLocation) 
+os.rename('cgi-bin/tmp.txt', hsFileLocation)

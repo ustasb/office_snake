@@ -16,12 +16,10 @@ var View = {
     },
     initialize: function (width, height) {
         // If JavaScript is enabled, prepare the document.
-        if (navigator.platform.indexOf("iPhone") !== -1 ||
-            navigator.platform.indexOf("iPod") !== -1) {
+        if (navigator.platform.indexOf("iPhone") !== -1 || navigator.platform.indexOf("iPod") !== -1) {
             $("#clientWarning").text("Sorry, this site requires a keyboard.");
         } else if ($.browser && $.browser.msie && $.browser.version <= 6.0) {
-            $("#clientWarning").html("Your browser isn't supported" +
-                                     "here.<br />Update it!");
+            $("#clientWarning").html("Your browser isn't supported here.<br />Update it!");
         } else {
             $("#clientWarning").remove();
             $("#pauseMenu, #gameOver, .ui-resizable-handle").hide();
@@ -109,7 +107,7 @@ var View = {
 
             $.ajax({
                 type: "POST",
-                url: "../cgi-bin/hsGetter.py",
+                url: location.href + "cgi-bin/hsGetter.py",
                 data: {
                     amt: scoresToLoad,
                     diff: difficulty
@@ -175,9 +173,7 @@ var View = {
     updateGameContainer: function (width, height) {
         var top = ($(document).height() - height) / 2;
 
-        $("#gameContainer").css("top", top + "px")
-        .width(width)
-        .height(height);
+        $("#gameContainer").css("top", top + "px").width(width).height(height);
 
         View.gameContWidth = width;
         View.gameContHeight = height;

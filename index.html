@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Office Snake | Competitive JavaScript Snake</title>
+        <title>Office Snake | JavaScript Snake + Minesweeper</title>
         <meta charset="utf-8" />
-        <meta name="description" content="Office Snake is a competitive JavaScript Snake/Minesweeper game." />
+        <meta name="description" content="Office Snake is a JavaScript Snake/Minesweeper game." />
         <meta name="keywords" content="snake, snake minesweeper, snake game, free snake, office snake, javascript snake" />
         <link rel="shortcut icon" href="images/favicon.ico" />
         <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato" />
-        <link type="text/css" rel="stylesheet" href="lib/jqueryUI/jquery-ui-1.8.16.custom.css" />
-        <link type="text/css" rel="stylesheet" href="css/oSnake.css" />
-        <script>
+        <link type="text/css" rel="stylesheet" href="vendor/jquery-ui/jquery-ui-1.8.16.custom.css" />
+        <link type="text/css" rel="stylesheet" href="css/office_snake.css" />
+        <script type="text/javascript">
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-32730080-1']);
             _gaq.push(['_trackPageview']);
@@ -22,11 +22,24 @@
         </script>
     </head>
     <body>
+
+        <!--FACEBOOK-->
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=316415745165313";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
         <div id="fbLike">
-            <iframe src="https://www.facebook.com/plugins/like.php?href=www.officesnake.com&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=dark&amp;font=arial&amp;height=21" scrolling="no" frameborder="0" allowTransparency="true">
-            </iframe>
+            <div class="fb-like" data-href="http://officesnake.com" data-colorscheme="light" data-layout="button_count" data-action="like" data-show-faces="false" data-send="false"></div>
         </div>
+        <!--/ FACEBOOK-->
+
         <div id="clientWarning">Enable JavaScript to view this site.</div>
+
         <div id="gameContainer">
             <div id="pointAddition"></div>
             <div id="canvas">
@@ -151,10 +164,10 @@
                 </div>
             </div>
         </div>
-        <div id="credit">made by <a href="https://www.github.com/ustasb/office_snake">Brian Ustas</a></div>
-        <script src="lib/jquery-1.7.2.min.js"></script>
-        <script src="lib/jqueryUI/jquery-ui-1.8.21.custom.min.js"></script>
-        <script src="lib/sha1.js"></script>
-        <script src="js/oSnake.combined.min.js"></script>
+
+        <script src="vendor/jquery-1.7.2.min.js"></script>
+        <script src="vendor/jquery-ui/jquery-ui-1.8.21.custom.min.js"></script>
+        <script src="dist/office_snake.min.js"></script>
+
     </body>
 </html>
