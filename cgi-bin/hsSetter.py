@@ -19,7 +19,7 @@ print('\r')
 rank = 1
 madeEntry = False
 newEntry = '{0},{1},{2},{3}\n'.format(pName, pScore, pTime, date)
-hsFileLocation = '{0}HS.csv'.format(pDifficulty)
+hsFileLocation = 'cgi-bin/{0}HS.csv'.format(pDifficulty)
 
 try:
     hsFile = open(hsFileLocation, 'r')

@@ -5,7 +5,7 @@ import cgi
 request = cgi.FieldStorage()
 scoresToReturn = int(request.getvalue('amt'))
 difficulty = request.getvalue('diff')
-hsFile = '{0}HS.csv'.format(difficulty)
+hsFile = 'cgi-bin/{0}HS.csv'.format(difficulty)
 
 # Print header
 print('Content-type: text/plain\r')

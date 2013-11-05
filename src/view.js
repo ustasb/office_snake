@@ -19,7 +19,7 @@ var View = {
         if (navigator.platform.indexOf("iPhone") !== -1 || navigator.platform.indexOf("iPod") !== -1) {
             $("#clientWarning").text("Sorry, this site requires a keyboard.");
         } else if ($.browser && $.browser.msie && $.browser.version <= 6.0) {
-            $("#clientWarning").html("Your browser isn't supported" + "here.<br />Update it!");
+            $("#clientWarning").html("Your browser isn't supported here.<br />Update it!");
         } else {
             $("#clientWarning").remove();
             $("#pauseMenu, #gameOver, .ui-resizable-handle").hide();
