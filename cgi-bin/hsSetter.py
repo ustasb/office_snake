@@ -28,7 +28,7 @@ except IOError:
     open(hsFileLocation, 'w')
     hsFile = open(hsFileLocation, 'r')
 
-with hsFile, open('cgi-bin/tmp.txt', 'w') as outFile:
+with hsFile, open('cgi-bin/tmp', 'w') as outFile:
 
     def makeEntry(line1, line2):
         global madeEntry
@@ -61,4 +61,4 @@ with hsFile, open('cgi-bin/tmp.txt', 'w') as outFile:
         print(rank)
         outFile.write(newEntry)
 
-os.rename('cgi-bin/tmp.txt', hsFileLocation)
+os.rename('cgi-bin/tmp', hsFileLocation)
