@@ -107,7 +107,7 @@ var View = {
 
             $.ajax({
                 type: "POST",
-                url: "../cgi-bin/hsGetter.py",
+                url: location.href + "cgi-bin/hsGetter.py",
                 data: {
                     amt: scoresToLoad,
                     diff: difficulty

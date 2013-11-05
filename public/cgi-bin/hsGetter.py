@@ -1,11 +1,11 @@
-#!/usr/local/bin/python3
+#!/usr/bin/env python3
 
 import cgi
 
 request = cgi.FieldStorage()
 scoresToReturn = int(request.getvalue('amt'))
 difficulty = request.getvalue('diff')
-hsFile = 'cgi-bin/{0}HS.csv'.format(difficulty)
+hsFile = '{0}HS.csv'.format(difficulty)
 
 # Print header
 print('Content-type: text/plain\r')
