@@ -2,7 +2,7 @@
 
 **A JavaScript Snake/Minesweeper Game**
 
-[officesnake.com] (http://officesnake.com)
+[ustasb.com/officesnake] (http://ustasb.com/officesnake)
 
 Initial release: 10/22/2011
 
