@@ -14,9 +14,9 @@ To install npm modules:
 
     npm install
 
-To start a local server to test the CGI scripts, use the Python 3 server included:
+To start a local server on port 8000:
 
-    python3 server.py
+    python -m http.server --cgi 8000
 
 To regenerate `office_snake.min.js` while developing:
 
