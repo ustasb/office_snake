@@ -14,4 +14,5 @@ VOLUME /srv/www/office_snake
 
 EXPOSE 8000
 
-CMD ["python", "-m", "http.server", "--cgi", "8000"]
+# -u to stop Python from buffering its output.
+CMD ["python", "-u", "-m", "http.server", "--cgi", "8000"]
