@@ -17,13 +17,10 @@ module.exports = function(grunt) {
                 }
             }
         },
-        watch: {
-            files: ["src/*.js"],
-            tasks: ["concat", "uglify"]
-        }
     });
 
     grunt.loadNpmTasks("grunt-contrib-uglify");
-    grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-concat");
+
+    grunt.registerTask('default', ['concat', 'uglify']);
 };

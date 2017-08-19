@@ -1,18 +1,23 @@
-FROM python:3.4.2
+FROM python:3.6.2-alpine3.6
 MAINTAINER Brian Ustas <brianustas@gmail.com>
 
-RUN apt-get -y update && \
-    apt-get -y install git
+ARG APP_PATH="/srv/www/office_snake"
 
-RUN git clone https://github.com/ustasb/office_snake.git /srv/www/office_snake && \
-    rm -rf /srv/www/office_snake/.git && \
-    chmod -R 777 /srv/www/office_snake  # The Python CGI server requires 'other' write access...
+RUN apk add --update \
+  nodejs \
+  nodejs-npm \
+  && rm -rf /var/cache/apk/*
 
-WORKDIR /srv/www/office_snake
+COPY . $APP_PATH
+WORKDIR $APP_PATH
 
-VOLUME /srv/www/office_snake
+# The Python CGI server requires 'other' write access...
+RUN chmod -R 777 $APP_PATH
+
+RUN npm install && npm install -g grunt-cli
 
 EXPOSE 8000
+VOLUME $APP_PATH
 
 # -u to stop Python from buffering its output.
 CMD ["python", "-u", "-m", "http.server", "--cgi", "8000"]
