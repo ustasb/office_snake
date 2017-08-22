@@ -2,3 +2,5 @@
 *.swp
 .DS_Store
 node_modules/
+public/dist/*
+!public/dist/.gitkeep

@@ -1,23 +1,31 @@
 FROM python:3.6.2-alpine3.6
 MAINTAINER Brian Ustas <brianustas@gmail.com>
 
-ARG APP_PATH="/srv/www/office_snake"
+ARG APP_PATH="/opt/office_snake"
 
 RUN apk add --update \
   nodejs \
   nodejs-npm \
   && rm -rf /var/cache/apk/*
 
-COPY . $APP_PATH
 WORKDIR $APP_PATH
 
-# The Python CGI server requires 'other' write access...
-RUN chmod -R 777 $APP_PATH
+# Install dependencies first for caching.
+ADD package.json $APP_PATH
+ADD package-lock.json $APP_PATH
+RUN npm install && npm install -g grunt-cli@1.2.0
 
-RUN npm install && npm install -g grunt-cli
+COPY . $APP_PATH
+
+# The Python CGI server requires 'other' write access...
+RUN chmod -R 777 $APP_PATH/public/cgi-bin
+
+RUN grunt default
 
 EXPOSE 8000
 VOLUME $APP_PATH
+
+WORKDIR $APP_PATH/public
 
 # -u to stop Python from buffering its output.
 CMD ["python", "-u", "-m", "http.server", "--cgi", "8000"]

@@ -1,8 +1,8 @@
 # Office Snake
 
-**A JavaScript Snake/Minesweeper Game**
+**A JavaScript Snake/ Minesweeper Game**
 
-[ustasb.com/officesnake] (http://ustasb.com/officesnake)
+[officesnake.com](http://www.officesnake.com)
 
 Initial release: 10/22/2011
 
@@ -16,16 +16,16 @@ First, build the Docker image:
 
 Concatenate source files with:
 
-    ./recompile_assets.sh
+    docker run -v $(pwd)/public:/opt/office_snake/public office_snake grunt default
 
 To start the service:
 
-    docker run -p 8000:8000 office_snake
+    docker run -p 8000:8000 -v $(pwd)/public:/opt/office_snake/public -w /opt/office_snake/public office_snake
 
 Navigate to `http://<docker-ip>:8000` in your browser.
 
 ## Development
 
-To rebuilt assets when files change:
+To rebuild assets when files change:
 
-    fswatch -o src | xargs -n1 -I{} ./recompile_assets.sh
+    fswatch -o public/js | xargs -n1 -I{} docker run -v $(pwd)/public:/opt/office_snake/public office_snake grunt default
