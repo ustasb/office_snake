@@ -20,7 +20,7 @@ Concatenate source files with:
 
 To start the service:
 
-    docker run -p 8000:8000 -v $(pwd)/public:/opt/office_snake/public -w /opt/office_snake/public office_snake
+    docker run -p 8000:8000 -v $(pwd)/public:/opt/office_snake/public office_snake
 
 Navigate to `http://<docker-ip>:8000` in your browser.
 

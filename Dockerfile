@@ -20,12 +20,8 @@ COPY . $APP_PATH
 # The Python CGI server requires 'other' write access...
 RUN chmod -R 777 $APP_PATH/public/cgi-bin
 
-RUN grunt default
-
 EXPOSE 8000
 VOLUME $APP_PATH
 
-WORKDIR $APP_PATH/public
-
 # -u to stop Python from buffering its output.
-CMD ["python", "-u", "-m", "http.server", "--cgi", "8000"]
+CMD grunt default && cd public && python -u -m http.server --cgi 8000
