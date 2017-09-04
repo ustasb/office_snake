@@ -19,7 +19,7 @@ print('\r')
 rank = 1
 madeEntry = False
 newEntry = '{0},{1},{2},{3}\n'.format(pName, pScore, pTime, date)
-hsFileLocation = 'data/{0}HS.csv'.format(pDifficulty)
+hsFileLocation = 'high_scores/{0}HS.csv'.format(pDifficulty)
 
 try:
     hsFile = open(hsFileLocation, 'r')
@@ -28,7 +28,7 @@ except IOError:
     open(hsFileLocation, 'w')
     hsFile = open(hsFileLocation, 'r')
 
-with hsFile, open('data/tmp', 'w') as outFile:
+with hsFile, open('high_scores/tmp', 'w') as outFile:
 
     def makeEntry(line1, line2):
         global madeEntry
@@ -61,4 +61,4 @@ with hsFile, open('data/tmp', 'w') as outFile:
         print(rank)
         outFile.write(newEntry)
 
-os.rename('data/tmp', hsFileLocation)
+os.rename('high_scores/tmp', hsFileLocation)
