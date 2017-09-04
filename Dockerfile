@@ -17,9 +17,6 @@ RUN npm install && npm install -g grunt-cli@1.2.0
 
 COPY . $APP_PATH
 
-# The Python CGI server requires 'other' write access...
-RUN chmod -R 777 $APP_PATH/public/cgi-bin
-
 EXPOSE 8000
 VOLUME $APP_PATH
 
