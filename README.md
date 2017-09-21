@@ -1,6 +1,8 @@
 # Office Snake
 
-**A JavaScript Snake/ Minesweeper Game**
+Office Snake is a competitive Snake game written in JavaScript.
+
+Challenge mode combines Snake with the classic Minesweeper game.
 
 - [officesnake.com](http://www.officesnake.com)
 - Initial release: 10/22/2011
