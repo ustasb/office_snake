@@ -16,7 +16,7 @@ h1 { font-size:2.9em; font-weight:400; }
 #loading { bottom:2px; left:4px; position:absolute; }
 #slidingMenu { position:absolute; top:0; width:10000px; }
 #credit { position:absolute; top:15px; right:30px; font-size: 0.8em; }
-#facebook-like-button { position:absolute; top:45px; right:0; width:90px; overflow:hidden; }
+#facebook-like-button { position:absolute; top:45px; right:30px; overflow:hidden; }
 
 .ui-icon-gripsmall-diagonal-se { background-position:-80px -224px; height:15px; width:15px; }
 
