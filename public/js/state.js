@@ -1,4 +1,4 @@
-var Cache = {
+var State = {
     tiles: [[]],
     tilesYLimit: 0,
     tilesXLimit: 0,
@@ -25,21 +25,21 @@ var Cache = {
         gems: 0,
         humanCount: 0
     },
-    resetCache: function () {
+    resetState: function () {
         var param;
 
-        Cache.tiles = [[]];
-        Cache.pickUps = [];
-        Cache.walls = [];
+        State.tiles = [[]];
+        State.pickUps = [];
+        State.walls = [];
 
-        for (param in Cache.session) {
-            if (Cache.session.hasOwnProperty(param)) {
-                Cache.session[param] = 0;
+        for (param in State.session) {
+            if (State.session.hasOwnProperty(param)) {
+                State.session[param] = 0;
             }
         }
 
-        Cache.session.difficulty = undefined;
-        Cache.session.level = 1;
+        State.session.difficulty = undefined;
+        State.session.level = 1;
         Snake.segsToKill[0] = 0;
     }
 };

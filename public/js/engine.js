@@ -14,7 +14,7 @@ var Engine = {
             return;
         }
 
-        if (Cache.enteringPortal) {
+        if (State.enteringPortal) {
             Helpers.enterPortal();
         } else {
             Engine.waitingForInput = true;

@@ -102,7 +102,7 @@ $(function () {
         }
 
         View.resizeMainWindow("homePos", View.initWidth, View.initHeight);
-        Cache.session.difficulty = undefined;
+        State.session.difficulty = undefined;
     });
 
     $("#mainMenu span").click(function () {
@@ -147,7 +147,7 @@ $(function () {
         View.resizeMainWindow("homePos", View.initWidth, View.initHeight, function () {
             $("#gameOver").appendTo("#gameViewUtils").hide();
             Helpers.clearLevel();
-            View.removeLevel(Cache.session.level);
+            View.removeLevel(State.session.level);
             View.resetSession();
         });
     });
@@ -161,8 +161,8 @@ $(function () {
             View.updateViewDependencies(ui.size.width, ui.size.height);
         },
         stop: function (event, ui) {
-            View.alignGameWinToGrid(Cache.literals.tileWidth,
-                                    Cache.literals.tileHeight);
+            View.alignGameWinToGrid(State.literals.tileWidth,
+                                    State.literals.tileHeight);
 
             Helpers.readjustWallSlider();
 
@@ -174,8 +174,8 @@ $(function () {
                     var numOfScores, scoreRows, scoresToDelete;
 
                     numOfScores = $(".highscore").length;
-                    scoreRows = (ui.size.height - 4 * Cache.literals.tileHeight) /
-                                Cache.literals.tileHeight;
+                    scoreRows = (ui.size.height - 4 * State.literals.tileHeight) /
+                                State.literals.tileHeight;
                     scoresToDelete = numOfScores - scoreRows;
 
                     for (var i = 0; i < scoresToDelete; i++) {
@@ -214,8 +214,8 @@ $(function () {
                 url: location.href + "cgi-bin/hsSetter.py",
                 data: {
                     name: name,
-                    diff: Cache.session.difficulty,
-                    score: Cache.session.score,
+                    diff: State.session.difficulty,
+                    score: State.session.score,
                     time: Engine.time,
                 }
             }).done(handleSuccess);

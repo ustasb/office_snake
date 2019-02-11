@@ -27,9 +27,9 @@ var View = {
 
             // Sanitize arguments
             width = (width > 500) ? width : 500;
-            width -= (width % Cache.literals.tileWidth);
+            width -= (width % State.literals.tileWidth);
             height = (height > 500) ? height : 500;
-            height -= (height % Cache.literals.tileHeight);
+            height -= (height % State.literals.tileHeight);
 
             View.initWidth = width;
             View.initHeight = height;
@@ -40,8 +40,8 @@ var View = {
             var maxWidth = $(window).width() / 1.3,
                 maxHeight = $(window).height() / 1.3;
 
-            maxWidth -= (maxWidth % Cache.literals.tileWidth);
-            maxHeight -= (maxHeight % Cache.literals.tileHeight);
+            maxWidth -= (maxWidth % State.literals.tileWidth);
+            maxHeight -= (maxHeight % State.literals.tileHeight);
 
             maxWidth = (maxWidth > width) ? maxWidth : width + 100;
             maxHeight = (maxHeight > height) ? maxHeight : height + 100;
@@ -63,9 +63,9 @@ var View = {
 
             View.hsRequestTime = (new Date()).getTime();
 
-            scorePadding = 4 * Cache.literals.tileHeight;
+            scorePadding = 4 * State.literals.tileHeight;
             scoresToLoad = Math.floor((View.gameContHeight - scorePadding) /
-                                      Cache.literals.tileHeight);
+                                      State.literals.tileHeight);
 
             $("#" + difficulty + "View").css("text-decoration", "underline")
             .siblings().css("text-decoration", "none");
@@ -164,7 +164,7 @@ var View = {
     updateChallengeInfo: function (level, gems) {
         var progress = "Hidden Humans: " + gems;
 
-        if (Cache.session.difficulty === "challenge") {
+        if (State.session.difficulty === "challenge") {
             progress = "Level: " + level + " | " + progress;
         }
 
@@ -205,7 +205,7 @@ var View = {
 
     })(),
     selectDifficulty: function (difficulty) {
-        Cache.session.difficulty = difficulty;
+        State.session.difficulty = difficulty;
         $("#selectedDifficulty").text("difficulty: " + difficulty);
 
         if (difficulty === "custom") {
@@ -225,8 +225,8 @@ var View = {
                 $(".challengeInfo").show();
             }
 
-            View.resizeMainWindow("helpPos", Cache.literals.compWidth,
-                                  Cache.literals.compHeight);
+            View.resizeMainWindow("helpPos", State.literals.compWidth,
+                                  State.literals.compHeight);
         }
 
     },
@@ -274,18 +274,18 @@ var View = {
     })(),
     updateScore: function (points) {
         points = (Engine.activeDblPoints) ? points * 2 : points;
-        Cache.session.score += points;
+        State.session.score += points;
 
-        $("#scoreBar").text(Cache.session.score + "pts");
+        $("#scoreBar").text(State.session.score + "pts");
 
         points = (points > 0) ? "+" + points : points;
         $("#pointAddition").html("<span>" + points + "pts<span>");
 
-        if (Cache.addedPtsTimer) {
-            clearTimeout(Cache.addedPtsTimer);
+        if (State.addedPtsTimer) {
+            clearTimeout(State.addedPtsTimer);
         }
 
-        Cache.addedPtsTimer = setTimeout(function () {
+        State.addedPtsTimer = setTimeout(function () {
             if ($.browser && $.browser.msie && $.browser.version < 9.0) {
                 // This is an IE < 9 fix. Firstly, fadeout() is too processor
                 // intensive for IE and slows the game down noticeably.
@@ -300,16 +300,16 @@ var View = {
         }, 1000);
     },
     buildLevel: function () {
-        $('<div id="levelContainer_' + Cache.session.level +
+        $('<div id="levelContainer_' + State.session.level +
           '" class="levelContainer"></div>')
         .width(View.gameContWidth)
-        .append('<div id="level_' + Cache.session.level +
+        .append('<div id="level_' + State.session.level +
                 '" class="level"><div id="countdown"><div>3</div></div></div>')
         .appendTo("#mapsIE7Fix");
 
-        if (Cache.session.difficulty === "challenge") {
+        if (State.session.difficulty === "challenge") {
             $("#countdown").prepend("<div id='currentLevel'>Level " +
-                                    Cache.session.level + "</div>");
+                                    State.session.level + "</div>");
         } else {
             View.centerElement($("#countdown div"), $("#countdown"));
         }
@@ -330,28 +330,28 @@ var View = {
         });
     },
     initSession: function () {
-        if (Cache.session.difficulty !== "custom") {
+        if (State.session.difficulty !== "custom") {
             Snake.segsToCreate = Snake.initSegs;
             Engine.powerUpDuration = 5;
         }
 
-        switch (Cache.session.difficulty) {
+        switch (State.session.difficulty) {
         case "classic":
             Snake.speed = 76;
-            Cache.session.humansPresent = 3;
+            State.session.humansPresent = 3;
             break;
         case "challenge":
             Snake.speed = 120;
-            Cache.session.humansPresent = 0;
+            State.session.humansPresent = 0;
 
             // Determine the final level based on the level size.
             var maxWalls = Helpers.getMaxWalls();
-            Cache.session.finalLevel = maxWalls / Cache.literals.wallMultiplier;
+            State.session.finalLevel = maxWalls / State.literals.wallMultiplier;
             break;
         case "custom":
             // -1 because the snake's head is always generated.
             Snake.segsToCreate = $("#startingLengthSlider").slider("value") - 1;
-            Cache.session.humansPresent = $("#humansPresentSlider").slider("value");
+            State.session.humansPresent = $("#humansPresentSlider").slider("value");
             Engine.powerUpDuration = $("#powerUpDurationSlider").slider("value");
             // Convert the speed to milliseconds.
             Snake.speed = ($("#speedSlider").slider("option", "max") -
@@ -361,29 +361,29 @@ var View = {
 
         Helpers.buildTiles();
         View.buildLevel();
-        Helpers.prepareLevel(Snake.initSegs, Cache.session.humansPresent);
+        Helpers.prepareLevel(Snake.initSegs, State.session.humansPresent);
     },
     resetSession: function () {
-        Cache.resetCache();
+        State.resetState();
 
         Engine.powerUpToggleTime = 0;
 
         $("#pauseMenu").hide();
         $("#clock").text(Engine.time = 0);
-        $("#scoreBar").text(Cache.session.score + "pts");
+        $("#scoreBar").text(State.session.score + "pts");
     },
     gameOver: function () {
         if (document.getElementById("powerUpTimeBar")) {
             $("#powerUpTimeBar").stop();
         }
 
-        $("#score").text("Score: " + Cache.session.score);
+        $("#score").text("Score: " + State.session.score);
         $("#rank").text("Rank: -");
 
-        if (Cache.session.difficulty === "custom") {
+        if (State.session.difficulty === "custom") {
             $("#rank, #enterName").hide();
         } else {
-            if (Cache.session.score >= 100) {
+            if (State.session.score >= 100) {
                 $("input[name='name']").val("").removeAttr("disabled");
                 $("#enterName .saving").hide();
                 $("#rank, #enterName, #submit").show();
@@ -393,12 +393,12 @@ var View = {
         }
 
         $("#gameOver").appendTo("#level_" +
-                                Cache.session.level).width(View.gameContWidth);
+                                State.session.level).width(View.gameContWidth);
         $("#gameOver").show();
         View.centerElement($("#gameOver"));
         $("#enterName input").focus();
     },
     removeLevel: function (level) {
-        $("#levelContainer_" + level || Cache.session.level).remove();
+        $("#levelContainer_" + level || State.session.level).remove();
     }
 };

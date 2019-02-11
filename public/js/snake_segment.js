@@ -4,11 +4,11 @@ function SnakeSegment() {
     if (snakeSegsLength === 1) {
         Snake.head = this;
     }
-    
+
     var cssClassName = (this === Snake.head) ? "head" : "snakeSeg";
     this.$html = $("<div id='" + "seg_" + snakeSegsLength + "' class='" +
                    cssClassName + "'></div>");
-    
+
     if (snakeSegsLength !== 1) {
         this.leaderSegment = Snake.segments[snakeSegsLength - 2];
         this.direction = this.leaderSegment.direction;
@@ -25,9 +25,9 @@ SnakeSegment.prototype = {
         if (Snake.segments.length !== 1) {
             this.tilePos = this.leaderSegment.previousTilePos;
         }
-        
+
         Helpers.drawObjToTile(this, true);
-        $("#level_" + Cache.session.level).append(this.$html);
+        $("#level_" + State.session.level).append(this.$html);
     },
     moveHead: function () {
         var attr;
@@ -35,19 +35,19 @@ SnakeSegment.prototype = {
 
         switch (Snake.head.direction) {
         case "n":
-            this.tilePos[0] = (this.tilePos[0] === 0) ? Cache.tilesYLimit : this.tilePos[0] -= 1;
+            this.tilePos[0] = (this.tilePos[0] === 0) ? State.tilesYLimit : this.tilePos[0] -= 1;
             attr = "top";
             break;
         case "e":
-            this.tilePos[1] = (this.tilePos[1] === Cache.tilesXLimit) ? 0 : this.tilePos[1] += 1;
+            this.tilePos[1] = (this.tilePos[1] === State.tilesXLimit) ? 0 : this.tilePos[1] += 1;
             attr = "left";
             break;
         case "s":
-            this.tilePos[0] = (this.tilePos[0] === Cache.tilesYLimit) ? 0 : this.tilePos[0] += 1;
+            this.tilePos[0] = (this.tilePos[0] === State.tilesYLimit) ? 0 : this.tilePos[0] += 1;
             attr = "top";
             break;
         case "w":
-            this.tilePos[1] = (this.tilePos[1] === 0) ? Cache.tilesXLimit : this.tilePos[1] -= 1;
+            this.tilePos[1] = (this.tilePos[1] === 0) ? State.tilesXLimit : this.tilePos[1] -= 1;
             attr = "left";
             break;
         }
@@ -64,7 +64,7 @@ SnakeSegment.prototype = {
         Helpers.drawObjToTile(this, true);
     },
     destroy: function (keepHtml) {
-        Cache.tiles[this.tilePos[0]][this.tilePos[1]].obj = undefined;
+        State.tiles[this.tilePos[0]][this.tilePos[1]].obj = undefined;
 
         for (var i = 0, j = Snake.segments.length; i < j; i++) {
             if (this === Snake.segments[i]) {
