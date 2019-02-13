@@ -1,7 +1,7 @@
 html, body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, input, textarea, p, blockquote, tr, th, td { margin:0; padding:0; }
 div, span, p, a, tr, th, td { color:#afafaf; font-family:Lato, Arial, sans-serif; line-height:20px; }
 
-html { background-color:#111; background-image:url(../images/tiles.png); height:100%; position:relative; }
+html { background-color:#111; background-image:url(../images/tiles.png); height:100%; position:relative; overflow: hidden; }
 a:focus { outline:none; }
 ul { list-style-type:square; }
 input { background-color:#afafaf; border:2px solid #000; color:#111; font-size:1em; margin-top:2px; padding-left:2px; }

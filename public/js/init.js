@@ -45,8 +45,15 @@ $(function () {
     });
 
     // Bind events
+    var ARROW_KEY_CODES = [37, 38, 39, 40];  // left, up, right, down
     $(document.body).keydown(function (event) {
         var key = event.keyCode;
+
+        if ($.inArray(key, ARROW_KEY_CODES) !== -1) {
+          // Prevents page scrolling when arrow keys are pressed.
+          // This issue was discovered when featured on http://www.snakegame.net
+          event.preventDefault()
+        }
 
         // Prevents the player from immediately reversing directions
         // via cycling directions.
