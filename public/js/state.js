@@ -7,8 +7,8 @@ var State = {
     enteringPortal: false,
     addedPtsTimer: undefined,
     literals: {
-        compWidth: 600,
-        compHeight: 600,
+        compWidth: 540,
+        compHeight: 540,
         tileHeight: 20,
         tileWidth: 20,
         wallMultiplier: 10
