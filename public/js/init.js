@@ -256,7 +256,8 @@ $(function () {
     if (/snakegame\.net/.test(url)) {
       // We're in an iframe with surrounding ad banners...
       // Make the game window smaller.
-      View.initialize(730, 540);
+      View.initialize(700, 540);
+      $("#credit").prependTo("#home");
     } else {
       View.initialize(800, 540);
     }
