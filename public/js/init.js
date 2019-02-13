@@ -249,5 +249,15 @@ $(function () {
         }
     });
 
-    View.initialize(800, 540);
+    // Detect the parent page's URL.
+    // https://stackoverflow.com/a/7739035/1575238
+    var url = (window.location !== window.parent.location) ? document.referrer : document.location.href;
+
+    if (/snakegame\.net/.test(url)) {
+      // We're in an iframe with surrounding ad banners...
+      // Make the game window smaller.
+      View.initialize(730, 540);
+    } else {
+      View.initialize(800, 540);
+    }
 });
