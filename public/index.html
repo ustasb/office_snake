@@ -7,7 +7,7 @@
         <meta name="description" content="Office Snake is a competitive Snake game with a Minesweeper twist." />
         <meta name="keywords" content="snake, snake minesweeper, snake game, free snake, office snake, javascript snake" />
         <link rel="shortcut icon" href="images/favicon.ico" />
-        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" />
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="vendor/jquery-ui/jquery-ui-1.8.16.custom.css" />
         <link type="text/css" rel="stylesheet" href="css/office_snake.css" />
     </head>
@@ -29,29 +29,29 @@
                 <div id="slidingMenu">
                     <div id="highScores">
                         <div id="highScoresView">
-                            <span id="classicView" class="button">Classic</span>
+                            <span id="classicView" class="button">classic</span>
                             <span> | </span>
-                            <span id="challengeView" class="button">Challenge</span>
+                            <span id="challengeView" class="button">challenge</span>
                         </div>
                         <div class="back button">back</div>
                         <table>
                             <tr>
                                 <th><!-- rank --></th>
-                                <th>Name</th>
-                                <th>Score</th>
-                                <th>Time</th>
-                                <th>Date</th>
+                                <th>name</th>
+                                <th>score</th>
+                                <th>time</th>
+                                <th>date</th>
                             </tr>
                         </table>
                     </div>
                     <div id="home">
                         <div class="centerBox">
-                            <h1>Office Snake</h1>
+                            <h1>office snake</h1>
                             <div id="mainMenu">
-                                <span class="button">Classic</span><br />
-                                <span class="button">Challenge</span><br />
-                                <span class="button">Custom</span><br /><br />
-                                <span class="button">High Scores</span>
+                                <span class="button">classic</span><br />
+                                <span class="button">challenge</span><br />
+                                <span class="button">custom</span><br /><br />
+                                <span class="button">high scores</span>
                             </div><br />
                         </div>
                     </div>
@@ -72,42 +72,42 @@
                             </div>
                             <div id="custom">
                                 <div>
-                                    <span id="speed">Speed: <span></span></span>
+                                    <span id="speed">speed: <span></span></span>
                                     <div class="slider"></div>
                                 </div><br />
                                 <div>
-                                    <span id="powerUpDuration">Power-Up Duration: <span></span>s</span>
+                                    <span id="powerUpDuration">power-up duration: <span></span>s</span>
                                     <div class="slider"></div>
                                 </div><br />
                                 <div>
-                                    <span id="startingLength">Starting Length: <span></span></span>
+                                    <span id="startingLength">starting length: <span></span></span>
                                     <div class="slider"></div>
                                 </div><br />
                                 <div>
-                                    <span id="humansPresent">Humans Present: <span></span></span>
+                                    <span id="humansPresent">humans present: <span></span></span>
                                     <div class="slider"></div>
                                 </div><br />
                                 <div>
-                                    <span id="walls">Walls: <span></span></span>
+                                    <span id="walls">walls: <span></span></span>
                                     <div class="slider"></div>
                                 </div><br />
                                 <div>
-                                    <span id="bombs">Bombs: <span></span>%</span>
+                                    <span id="bombs">bombs: <span></span>%</span>
                                     <div class="slider"></div>
                                 </div><br />
                             </div>
                             <div id="pickUpCtrlInfo">
-                                 <div>Move<span>&uarr;&rarr;&darr;&larr;</span></div>
-                                <div>Pause<span>p</span></div>
-                                <span>-Items-</span>
-                                <div>Human<div class="pickUp smile"></div></div>
-                                <div>Double Points<div class="pickUp dblPoints"></div></div>
-                                <div>Shrink Length<div class="pickUp shrink"></div></div>
-                                <div>Slow Time<div class="pickUp slowTime"></div></div>
-                                <div>Invincibility<div class="pickUp invincible"></div></div>
-                                <div class="challengeInfo">Next Level<div class="pickUp portal"></div></div>
+                                 <div>move<span>&uarr;&rarr;&darr;&larr;</span></div>
+                                <div>pause<span>p</span></div>
+                                <span>items</span>
+                                <div>human<div class="pickUp smile"></div></div>
+                                <div>double points<div class="pickUp dblPoints"></div></div>
+                                <div>shrink length<div class="pickUp shrink"></div></div>
+                                <div>slow time<div class="pickUp slowTime"></div></div>
+                                <div>invincibility<div class="pickUp invincible"></div></div>
+                                <div class="challengeInfo">next level<div class="pickUp portal"></div></div>
                             </div>
-                            <div id="ready" class="button">Ready!</div>
+                            <div id="ready" class="button">ready</div>
                         </div>
                     </div>
                     <div id="maps">
@@ -122,24 +122,24 @@
                                 </div>
                                 <div id="powerUpPlaceHolder"></div>
                                 <div id="pauseMenu">
-                                    <span id="resume" class="button">Resume</span><br />
-                                    <span class="goToMenu button">Main Menu</span>
+                                    <span id="resume" class="button">resume</span><br />
+                                    <span class="goToMenu button">main menu</span>
                                 </div>
                                 <div id="gameOver">
                                     <div id="ranking">
-                                        <div id="congrats">Congrats! You've won. Crazy, bro.</div>
-                                        <span id="score">Score: </span><br />
-                                        <span id="rank">Rank: </span>
+                                        <div id="congrats">Congrats, you won!</div>
+                                        <span id="score">score: </span><br />
+                                        <span id="rank">rank: </span>
                                     </div>
                                     <div id="enterName">
                                         <label for="playerName">Submit a name to the high scores to view ranking.</label><br />
                                         <input id="playerName" type="text" name="name" value=""/><br />
                                         <span class="error"></span>
                                         <span class="saving"></span>
-                                        <span id="submit" class="button">Submit</span>
+                                        <span id="submit" class="button">submit</span>
                                     </div>
-                                    <span id="retry" class="button">Play Again</span><br />
-                                    <span class="goToMenu button">Main Menu</span>
+                                    <span id="retry" class="button">play again</span><br />
+                                    <span class="goToMenu button">main menu</span>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
 
         <script src="vendor/jquery-1.7.2.min.js"></script>
         <script src="vendor/jquery-ui/jquery-ui-1.8.21.custom.min.js"></script>
-        <script src="dist/office_snake.min.js?2"></script>
+        <script src="dist/office_snake.min.js?3"></script>
 
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

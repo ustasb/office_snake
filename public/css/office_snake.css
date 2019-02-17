@@ -1,5 +1,5 @@
 html, body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, input, textarea, p, blockquote, tr, th, td { margin:0; padding:0; }
-div, span, p, a, tr, th, td { color:#afafaf; font-family:Lato, Arial, sans-serif; line-height:20px; }
+html, body, div, span, p, a, tr, th, td { color:#afafaf; font-family:'Inconsolata', monospace; line-height:20px; }
 
 html { background-color:#111; background-image:url(../images/tiles.png); height:100%; position:relative; overflow: hidden; }
 a:focus { outline:none; }
@@ -53,7 +53,7 @@ table td:first-child + td, table th:first-child + th { width:150px; }
 #mapsIE7Fix, #maps .level { height:100%; position:relative; width:100%; }
 
 #gameViewUtils { height:100%; left:0; position:absolute; z-index:5; }
-#snakeHUD { border-bottom:1px dotted #afafaf; height:20px; position:absolute; text-align:center; width:100%; z-index:3; }
+#snakeHUD { border-bottom:1px solid #afafaf; height:20px; position:absolute; text-align:center; width:100%; z-index:3; }
 #snakeHUD .challengeInfo { left:5px; position:absolute; top:0; }
 #snakeHUD #scoreBar { position:absolute; right:5px; top:0; }
 
@@ -83,8 +83,8 @@ table td:first-child + td, table th:first-child + th { width:150px; }
 .head { background-color:maroon; border:5px solid #afafaf; height:8px; width:8px; z-index:3; }
 .snakeSeg { background-color:#afafaf; height:18px; width:18px; z-index:2; }
 .deadSnakeSeg { background-color:maroon!important; }
-.wall { border:2px solid #afafaf; color:#afafaf!important; font-family:Arial, sans-serif; font-size:.9em; height:14px; line-height:14px; text-align:center; width:14px; }
-.pickUp, .explosion { background-image:url(../images/items.png); }
+.wall { border:2px solid #afafaf; color:#afafaf!important; width:14px; height:14px; line-height:14px; text-align:center; }
+.pickUp, .explosion { background-image:url(../images/sprites.png); background-size: 129px 81px; }
 .pickUp { border:none; height:18px; width:18px; }
 .explosion { background-position:0 -20px; height:60px; margin:0; width:60px; z-index:0; }
 .smile { background-position:-18px 0; }
@@ -93,5 +93,4 @@ table td:first-child + td, table th:first-child + th { width:150px; }
 .shrink { background-position:-72px 0; }
 .slowTime { background-position:-54px 0; }
 .invincible { background-position:-108px 0; }
-.portal { background-position:-1px -1px; }
-
+.portal { background-position:0px 0px; }

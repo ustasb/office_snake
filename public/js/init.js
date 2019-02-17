@@ -212,7 +212,7 @@ $(function () {
             handleSuccess = function(rank) {
                 $("#rank").text("Rank: " + rank);
                 $("#enterName input").attr("disabled", "disabled");
-                $saving.text("Saved.");
+                $saving.text("saved!");
             };
 
             // Don't be a dick.

@@ -71,7 +71,7 @@ var View = {
             .siblings().css("text-decoration", "none");
 
             if (!document.getElementById("loading")) {
-                $("#canvas").append('<div id="loading">Loading...</div>');
+                $("#canvas").append('<div id="loading">loading...</div>');
             }
 
             handleSuccess = function(csvResponse) {
@@ -162,10 +162,10 @@ var View = {
         return $element;
     },
     updateChallengeInfo: function (level, gems) {
-        var progress = "Hidden Humans: " + gems;
+        var progress = "hidden humans: " + gems;
 
         if (State.session.difficulty === "challenge") {
-            progress = "Level: " + level + " | " + progress;
+            progress = "level: " + level + " | " + progress;
         }
 
         $("#snakeHUD .challengeInfo").text(progress);
@@ -308,7 +308,7 @@ var View = {
         .appendTo("#mapsIE7Fix");
 
         if (State.session.difficulty === "challenge") {
-            $("#countdown").prepend("<div id='currentLevel'>Level " +
+            $("#countdown").prepend("<div id='currentLevel'>level " +
                                     State.session.level + "</div>");
         } else {
             View.centerElement($("#countdown div"), $("#countdown"));
@@ -377,8 +377,8 @@ var View = {
             $("#powerUpTimeBar").stop();
         }
 
-        $("#score").text("Score: " + State.session.score);
-        $("#rank").text("Rank: -");
+        $("#score").text("score: " + State.session.score);
+        $("#rank").text("rank: -");
 
         if (State.session.difficulty === "custom") {
             $("#rank, #enterName").hide();
