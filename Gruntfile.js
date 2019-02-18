@@ -9,7 +9,10 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        mangle: true
+        compress: true,
+        mangle: {
+          toplevel: true,
+        },
       },
       dist: {
         files: {

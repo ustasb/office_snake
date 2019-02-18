@@ -2,8 +2,8 @@
   "name": "office_snake",
   "version": "1.2.1",
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-uglify": "~0.2.5",
-    "grunt-contrib-concat": "~0.3.0"
+    "grunt": "^1.0.3",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "^4.0.0"
   }
 }
