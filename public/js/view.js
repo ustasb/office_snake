@@ -14,6 +14,7 @@ var View = {
         helpPos: "",
         mapsPos: ""
     },
+    menuAnimationSpeed: 500,
     initialize: function (width, height) {
         // If JavaScript is enabled, prepare the document.
         if (navigator.platform.indexOf("iPhone") !== -1 || navigator.platform.indexOf("iPod") !== -1) {
@@ -239,7 +240,7 @@ var View = {
             $("#slidingMenu").animate({
                 "left" : View.slidingMenu[menuTab] + "px"
             }, {
-                duration: "slow",
+                duration: View.menuAnimationSpeed,
                 queue: false,
                 complete: callback
             });
@@ -254,7 +255,7 @@ var View = {
                 height: height + "px",
                 top: ($(document).height() - height) / 2 + "px"
             }, {
-                duration: "slow",
+                duration: View.menuAnimationSpeed,
                 queue: false,
                 step: function (now, fx) {
                     if (fx.prop === "width") {

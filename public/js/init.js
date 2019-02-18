@@ -194,7 +194,7 @@ $(function () {
         }
     });
 
-    $("#submit").live("click", function () {
+    $(document).on('click', '#submit', function () {
         var name, nameLength, handleSuccess, minLen = 3, maxLen = 15,
             $submit = $("#enterName #submit");
 

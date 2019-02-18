@@ -114,7 +114,7 @@ var Helpers = {
 
             $("#levelContainer_" + priorLevel).animate({
                 "margin-left" : "-=" + View.gameContWidth + "px"
-            }, "slow", function () {
+            }, View.menuAnimationSpeed, function () {
                 View.removeLevel(priorLevel);
                 Engine.countdown(3);
             });
@@ -137,7 +137,7 @@ var Helpers = {
 
         $expiredLevel.animate({
             "margin-left" : "-=" + View.gameContWidth + "px"
-        }, "slow", function () {
+        }, View.menuAnimationSpeed, function () {
             $("#gameOver").appendTo("#gameViewUtils").hide();
             View.removeLevel("expired");
             Engine.countdown(3);
