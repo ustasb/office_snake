@@ -1,18 +1,30 @@
 #!/usr/bin/env python3
 
+import sys
 import cgi
 import os
 import time
 import re
 
-request = cgi.FieldStorage()
-pName = request.getvalue('name')
-pDifficulty = request.getvalue('diff')
-pScore = int(request.getvalue('score'))
-pTime = int(request.getvalue('time'))
-date = time.strftime('%m/%d/%y')
+try:
+    request = cgi.FieldStorage()
+    pName = request.getvalue('name')
+    pDifficulty = request.getvalue('diff')
+    pScore = int(request.getvalue('score'))
+    pTime = int(request.getvalue('time'))
+    pDigest = int(request.getvalue('d'))
+    date = time.strftime('%m/%d/%y')
 
-# Print header
+    # Validate the digest.
+    digest = str(pName) + str(pDifficulty) + str(pScore) + str(pTime)
+    digest = sum(map(lambda c: ord(c), digest))
+    if digest != pDigest:
+        raise 'invalid digest'
+except:
+    print("Status: 400 Bad Request\r\r")
+    sys.exit()
+
+# print header
 print('Content-type: text/plain\r')
 print('\r')
 

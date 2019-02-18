@@ -215,6 +215,10 @@ $(function () {
                 $saving.text("saved!");
             };
 
+            // Make high score tampering a tiny bit more difficult.
+            var digest = name + State.session.difficulty + State.session.score + Engine.time;
+            digest = digest.split('').reduce(function (total, char) { return total + char.charCodeAt(0); }, 0);
+
             // Don't be a dick.
             $.ajax({
                 type: "POST",
@@ -224,6 +228,7 @@ $(function () {
                     diff: State.session.difficulty,
                     score: State.session.score,
                     time: Engine.time,
+                    d: digest,
                 }
             }).done(handleSuccess);
         } else {
