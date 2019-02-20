@@ -338,11 +338,11 @@ var View = {
 
         switch (State.session.difficulty) {
         case "classic":
-            Snake.speed = 76;
+            Snake.speed = 100;
             State.session.humansPresent = 3;
             break;
         case "challenge":
-            Snake.speed = 120;
+            Snake.speed = 150;
             State.session.humansPresent = 0;
 
             // Determine the final level based on the level size.

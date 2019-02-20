@@ -38,13 +38,14 @@ var Helpers = {
             tile.obj = obj;
         }
 
+        // element.style is faster than $html.css.
+        var element = obj.$html[0];
+
         if (attr) {
-            obj.$html.css(attr, tile[attr] + "px");
+            element.style[attr] = tile[attr] + 'px';
         } else {
-            obj.$html.css({
-                left: tile.left + "px",
-                top: tile.top + "px"
-            });
+            element.style.left = tile.left + 'px';
+            element.style.top = tile.top + 'px';
         }
     },
     getSurroundingObjs: function (tilePos, classFilter) {
