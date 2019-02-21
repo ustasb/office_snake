@@ -1,6 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" class="nojs">
     <head>
+        <!-- Enables CSS styles that rely on JavaScript being enabled. -->
+        <script type="text/javascript">
+          (function(B,C){B[C]=B[C].replace(/\bnojs\b/,'js')})(document.documentElement,'className');
+        </script>
         <title>Office Snake | Competitive Snake Game</title>
         <meta charset="utf-8" />
         <meta name="author" content="Brian Ustas">
@@ -21,7 +25,8 @@
         <!--   <iframe src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fofficesnake.com&width=51&layout=box_count&action=like&size=small&show_faces=false&share=true&height=65&appId" width="51" height="65" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe> -->
         <!-- </div> -->
 
-        <div id="clientWarning">Enable JavaScript to view this site.</div>
+        <div id="jsWarning">Enable JavaScript to view this site.</div>
+        <div id="keyboardWarning">Sorry, this site requires a keyboard.</div>
 
         <div id="gameContainer">
             <div id="pointAddition"></div>
@@ -150,7 +155,7 @@
 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-        <script src="dist/office_snake.min.js?11"></script>
+        <script src="dist/office_snake.min.js?12"></script>
 
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
