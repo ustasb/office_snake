@@ -21,7 +21,7 @@ var View = {
             $("#keyboardWarning").show();
         } else {
             $("#pauseMenu, #gameOver, .ui-resizable-handle").hide();
-            $("#gameContainer, #credit").show();
+            $("#gameContainer").show();
 
             // Sanitize arguments
             width = (width > 500) ? width : 500;

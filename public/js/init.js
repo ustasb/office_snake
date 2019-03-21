@@ -262,7 +262,7 @@ $(function () {
       // We're in an iframe with surrounding ad banners...
       // Make the game window smaller.
       View.initialize(700, 540);
-      $("#credit").prependTo("#home");
+      $("#credit, #facebook-like-button").prependTo("#home");
     } else {
       View.initialize(800, 540);
     }
