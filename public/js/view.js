@@ -91,9 +91,11 @@ var View = {
                         time += "s";
                     }
 
+                    // score.slice(0, 6) to deal with pesky hackers.
+                    // Makes extreme fake scores not look as ridiculous.
                     $csvRow = $("<tr class='highscore'><td>" + rank +
                                 "</td><td>" + csvResponse[i][0] + "</td>" +
-                                "<td>" + csvResponse[i][1] + "</td><td>" +
+                                "<td>" + csvResponse[i][1].slice(0, 6) + "</td><td>" +
                                 time + "</td><td>" + csvResponse[i][3] +
                                 "</td></tr>");
 
