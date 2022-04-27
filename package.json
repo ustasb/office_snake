@@ -2,7 +2,7 @@
   "name": "office_snake",
   "version": "1.2.1",
   "devDependencies": {
-    "grunt": "^1.0.3",
+    "grunt": "^1.5.2",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-uglify": "^4.0.0"
   }
